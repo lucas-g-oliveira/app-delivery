@@ -1,0 +1,2 @@
+CREATE DATABASE IF NOT EXISTS `delivery-app-test`;
+CREATE DATABASE IF NOT EXISTS `delivery-app`;

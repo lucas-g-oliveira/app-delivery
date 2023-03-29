@@ -1,6 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('sequelize');
-const SalesProducts = sequelize.define('sales_products', {
+const SaleProduct = sequelize.define('sales_products', {
   sale_id: {
     type: DataTypes.INTEGER,
     references: {
@@ -24,4 +24,8 @@ const SalesProducts = sequelize.define('sales_products', {
   unique: true,
   fields: ['sale_id', 'product_id']
 });
-module.exports = SalesProducts;
+
+SaleProduct.associate = (models) => { SaleProduct.belongsTo(models.Sale, {foreignKey: 'saleId'}) } 
+SaleProduct.associate = (models) => { SaleProduct.belongsTo(models.Product, {foreignKey: 'productId'}) } 
+
+module.exports = SaleProduct;

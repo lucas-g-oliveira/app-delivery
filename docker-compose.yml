@@ -1,0 +1,56 @@
+version: "3"
+
+services:
+  frontend:
+    build: 
+      context: ./front-end
+    container_name: frontend
+    restart: always
+    working_dir: /app
+    volumes:
+      - ./front-end:/app
+    depends_on:
+      - backend
+    ports:
+      - 3000:3000
+    networks:
+      - app-delivery
+
+  backend:
+    build: 
+      context: ./back-end
+    container_name: backend
+    restart: always
+    volumes:
+      - ./back-end:/app
+    depends_on:
+      - db
+    ports:
+      - 3001:3001
+    environment:
+      MYSQL_USER: root
+      MYSQL_PASSWORD: password
+      MYSQL_HOST: db
+    networks:
+      - app-delivery
+
+  db:
+    container_name: db
+    image: mysql:8.0.23
+    restart: always
+    ports:
+      - 3306:3306
+      - 33060:33060
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: delivery-app
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    volumes: 
+      - ./init:/docker-entrypoint-initdb.d
+    networks:
+      - app-delivery
+
+networks:
+  app-delivery:
+    driver: bridge
