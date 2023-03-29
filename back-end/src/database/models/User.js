@@ -25,16 +25,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   },
   {
-    timestamp: false,
+    timestamps: false,
     tableName: 'users',
-    underscored: true,
     defaultScope: { attributes: { exclude: ['password'] } },
   });
-
-  // User.associate = (models) => {
-  //   User.hasMany(models.BlogPost,
-  //       {foreignKey: 'userId'})
-  // }
 
   return User;
 };

@@ -30,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
       status: DataTypes.STRING,
     },
     {
-      timestamp: false,
+      timestamps: false,
       tableName: 'sales',
       underscored: true,
       defaultScope: { attributes: { exclude: ['password'] } },
