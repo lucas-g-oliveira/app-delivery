@@ -1,17 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { Navigate } from 'react-router-dom';
-import Header from '../components/Header';
-import LeaderboardBtn from '../components/LeaderboardBtn';
-import MatchesBtn from '../components/MatchesBtn';
+import { Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { requestLogin, setToken, requestData } from '../services/requests';
-import { positiveLogo } from '../images';
-import '../styles/pages/login.css';
 
-const Login = () => {
+function Login(props) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLogged, setIsLogged] = useState(false);
+  const [isBtnDisabled, setIsBtnDisabled] = useState(true);
   const [failedTryLogin, setFailedTryLogin] = useState(false);
+
+  const MIN_PASSWORD_LENGTH = 6;
+
+  const validadeInputs = () => {
+    const isEmailValid = /\S+@\S+\.\S+/.test(email);
+    if (isEmailValid && password.length >= MIN_PASSWORD_LENGTH) {
+      setIsBtnDisabled(false);
+    } else {
+      setIsBtnDisabled(true);
+    }
+  };
 
   const login = async (event) => {
     event.preventDefault();
@@ -23,8 +31,8 @@ const Login = () => {
 
       const { role } = await requestData('/login/role', { email, password });
 
-      localStorage.setItem('token',  token);
-      localStorage.setItem('role',  role);
+      localStorage.setItem('token', token);
+      localStorage.setItem('role', role);
 
       setIsLogged(true);
     } catch (error) {
@@ -33,65 +41,84 @@ const Login = () => {
     }
   };
 
+  const handleClick = async () => {
+    const { history } = props;
+    history.push('/register');
+  };
+
   useEffect(() => {
     setFailedTryLogin(false);
+    validadeInputs();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [email, password]);
 
-  if (isLogged) return <Navigate to="/matches" />;
+  if (isLogged) return <Redirect to="/customer/products" />;
 
   return (
-    <>
-      <Header
-        page="LOGIN"
-        FirstNavigationLink={ LeaderboardBtn }
-        SecondNavegationLink={ MatchesBtn }
-      />
-      <section className="user-login-area">
-        <img src={ positiveLogo } alt="Trybe Futebol Clube Negative Logo" />
-        <form>
-          <h1>Área do usuário</h1>
-          <label htmlFor="email-input">
-            <input
-              className="login__login_input"
-              type="text"
-              value={ email }
-              onChange={ ({ target: { value } }) => setEmail(value) }
-              data-testid="login__login_input"
-              placeholder="Login"
-            />
-          </label>
-          <label htmlFor="password-input">
-            <input
-              type="password"
-              value={ password }
-              onChange={ ({ target: { value } }) => setPassword(value) }
-              data-testid="login__password_input"
-              placeholder="Senha"
-            />
-          </label>
-          {
-            (failedTryLogin)
-              ? (
-                <p data-testid="login__input_invalid_login_alert">
-                  {
-                    `O endereço de e-mail ou a senha não estão corretos.
-                    Por favor, tente novamente.`
-                  }
-                </p>
-              )
-              : null
-          }
-          <button
-            data-testid="login__login_btn"
-            type="submit"
-            onClick={ (event) => login(event) }
-          >
-            Entrar
-          </button>
-        </form>
-      </section>
-    </>
+    <section className="user-login-area">
+      <form>
+        <h1>Área do usuário</h1>
+        <label htmlFor="email-input">
+          <input
+            className="login__login_input"
+            type="text"
+            value={ email }
+            onChange={ ({ target: { value } }) => {
+              setEmail(value);
+              validadeInputs();
+            } }
+            data-testid="commom_login__input-email"
+            placeholder="Login"
+          />
+        </label>
+        <label htmlFor="password-input">
+          <input
+            type="password"
+            value={ password }
+            onChange={ ({ target: { value } }) => {
+              setPassword(value);
+              validadeInputs();
+            } }
+            data-testid="commom_login__input-password"
+            placeholder="Senha"
+          />
+        </label>
+        <button
+          data-testid="commom_login__button-login"
+          type="submit"
+          disabled={ isBtnDisabled }
+          onClick={ (event) => login(event) }
+        >
+          Entrar
+        </button>
+        <button
+          data-testid="commom_login__button-register"
+          type="submit"
+          onClick={ handleClick }
+        >
+          Registre-se
+        </button>
+      </form>
+      {
+        (failedTryLogin)
+          ? (
+            <p data-testid="login__input_invalid_login_alert">
+              {
+                `O endereço de e-mail ou a senha não estão corretos.
+                  Por favor, tente novamente.`
+              }
+            </p>
+          )
+          : null
+      }
+    </section>
   );
+}
+
+Login.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 export default Login;
