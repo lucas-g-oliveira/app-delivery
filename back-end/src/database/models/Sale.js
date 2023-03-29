@@ -1,5 +1,5 @@
 
-module.exports = (sequelize, Datatypes) => {
+module.exports = (sequelize, DataTypes) => {
   const Sale = sequelize.define(
     'Sale',
     {
@@ -7,27 +7,27 @@ module.exports = (sequelize, Datatypes) => {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Datatypes.INTEGER,
+        type: DataTypes.INTEGER,
       },
       userId: {
         allowNull: false,
         references:{ model: 'users', key: 'id'},
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
-        type: Datatypes.INTEGER,
+        type: DataTypes.INTEGER,
       },
       sellerId:{
         allowNull: false,
         references:{ model: 'users', key: 'id'},
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
-        type: Datatypes.INTEGER,
+        type: DataTypes.INTEGER,
       },
-      totalPrice: Datatypes.DECIMAL(9,2),
-      deliveryAddress: Datatypes.STRING,
-      deliveryNumber: Datatypes.STRING,
-      saleDate: {defaultValue: sequelize.NOW, type: Datatypes.DATE },
-      status: Datatypes.STRING,
+      totalPrice: DataTypes.DECIMAL(9,2),
+      deliveryAddress: DataTypes.STRING,
+      deliveryNumber: DataTypes.STRING,
+      saleDate: {defaultValue: sequelize.NOW, type: DataTypes.DATE },
+      status: DataTypes.STRING,
     },
     {
       timestamp: false,

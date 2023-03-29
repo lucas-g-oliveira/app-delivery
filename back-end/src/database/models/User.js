@@ -1,30 +1,40 @@
-
-module.exports = (sequelize, Datatypes) => {
-  const User = sequelize.define(
-    'User',
-    {
-      id: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: Datatypes.INTEGER,
-      },
-      name: Datatypes.STRING,
-      email: Datatypes.STRING,
-      password: Datatypes.STRING,
-      role: Datatypes.STRING
+module.exports = (sequelize, DataTypes) => {
+  const User = sequelize.define('User', 
+  {
+    id: {
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true,
+      type: DataTypes.INTEGER,
     },
-    {
-      timestamp: false,
-      tableName: 'users',
-      underscored: true,
-      defaultScope: { attributes: { exclude: ['password'] } },
+    name:{
+      type:DataTypes.STRING,
+      allowNull: false,
+    },
+    email: {
+      unique: true,
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    role:{ 
+      type: DataTypes.STRING
     }
-  );
+  },
+  {
+    timestamp: false,
+    tableName: 'users',
+    underscored: true,
+    defaultScope: { attributes: { exclude: ['password'] } },
+  });
 
-  User.associate = (models) => { User.hasMany(models.Sales, {foreignKey: 'userId'}) } 
-  User.associate = (models) => { User.hasMany(models.Sales, {foreignKey: 'sellerId'}) } 
-
+  // User.associate = (models) => {
+  //   User.hasMany(models.BlogPost,
+  //       {foreignKey: 'userId'})
+  // }
 
   return User;
 };
