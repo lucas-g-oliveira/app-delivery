@@ -1,6 +1,6 @@
 
 module.exports = (sequelize, Datatypes) => {
-  const User = sequelize.define(
+  const Sale = sequelize.define(
     'Sale',
     {
       id: {
@@ -37,7 +37,8 @@ module.exports = (sequelize, Datatypes) => {
     }
   );
 
-  User.associate = (models) => { User.hasMany(models.Sales, {foreignKey: 'userId'}) } 
-
-  return User;
+  Sale.associate = (models) => { Sale.belongsTo(models.User, {foreignKey: 'userId'}) } 
+  Sale.associate = (models) => { Sale.belongsTo(models.User, {foreignKey: 'sellerId'}) }
+ 
+  return Sale;
 };

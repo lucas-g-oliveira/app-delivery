@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-  up: (queryInterface, Sequelize) => queryInterface.bulkInsert('Products', [
+  up: (queryInterface, Sequelize) => queryInterface.bulkInsert('products', [
     { id: 1, name: 'Skol Lata 250ml', price: 2.20, url_image: 'http://localhost:3001/images/skol_lata_350ml.jpg' },
     { id: 2, name: 'Heineken 600ml', price: 7.50, url_image: 'http://localhost:3001/images/heineken_600ml.jpg' },
     { id: 3, name: 'Antarctica Pilsen 300ml', price: 2.49, url_image: 'http://localhost:3001/images/antarctica_pilsen_300ml.jpg' },
@@ -14,5 +14,5 @@ module.exports = {
     { id: 10, name: 'Skol Beats Senses 269ml', price: 3.57, url_image: 'http://localhost:3001/images/skol_beats_senses_269ml.jpg' },
     { id: 11, name: 'Stella Artois 275ml', price: 3.49, url_image: 'http://localhost:3001/images/stella_artois_275ml.jpg' },
   ]),
-  down: (queryInterface) => queryInterface.bulkDelete('Products', null, {}),
+  down: (queryInterface) => queryInterface.bulkDelete('products', null, {}),
 };
