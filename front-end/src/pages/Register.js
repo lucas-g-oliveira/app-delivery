@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React from 'react';
 
 export default class Register extends React.Component {
@@ -6,10 +7,13 @@ export default class Register extends React.Component {
     email: '',
     password: '',
     buttonEnabled: false,
+    message: '',
   };
 
   async componentDidUpdate() {
-    this.setState({ buttonEnabled: this.validaDados() });
+    if (this.validaDados()) {
+      this.setState({ buttonEnabled: true });
+    }
   }
 
   validaNome = () => {
@@ -37,12 +41,36 @@ export default class Register extends React.Component {
     this.setState({ [eventName]: event.target.value });
   };
 
+  handleSubmit = (event) => {
+    event.preventDefault();
+    const { username, email, password } = this.state;
+    axios
+      .post('localhost:3004/register', {
+        username,
+        email,
+        password,
+      })
+      .then((response) => {
+        const OK_STATUS = 201;
+        if (response.status === OK_STATUS) {
+          this.setState({ message: 'User created succesfully ' });
+        } else {
+          this.setState({ message: 'Some error occured' });
+        }
+        this.setState({ username: '' });
+        this.setState({ email: '' });
+        this.setState({ password: '' });
+      })
+      .catch((error) => console.log(error));
+  };
+
   render() {
     const {
       username,
       email,
       password,
       buttonEnabled,
+      message,
     } = this.state;
     return (
       <div>
@@ -83,7 +111,7 @@ export default class Register extends React.Component {
                 value={ password }
                 data-testid="common_register__input-password"
                 type="password"
-                placeholder="suasenha"
+                placeholder="Sua Senha"
                 onChange={ this.handleEvent }
               />
             </label>
@@ -91,11 +119,15 @@ export default class Register extends React.Component {
               data-testid="common_register__button-register"
               type="button"
               disabled={ !buttonEnabled }
+              onClick={ this.handleSubmit }
             >
               Cadastrar
             </button>
           </form>
-          <div data-testid="common_register__element-invalid_register">
+          <div
+            data-testid="common_register__element-invalid_register"
+            value={ message }
+          >
             Elemento oculto (Mensagens de Erro)
           </div>
         </div>
