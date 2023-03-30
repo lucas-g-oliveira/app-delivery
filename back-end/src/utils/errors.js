@@ -12,6 +12,7 @@ const errorStatus = {
     INVALID_CATEGORY: 'one or more "categoryIds" not found',
     POST_NOT_EXIST: 'Post does not exist',
     UNAUTHORIZED_USER: 'Unauthorized user',
+    NOT_FOUND: 'Not found',
   };
 
   const customError = (status, message) => ({ status, message });

@@ -11,22 +11,22 @@ module.exports = (sequelize, DataTypes) => {
       },
       userId: {
         allowNull: false,
-        references:{ model: 'users', key: 'id'},
+        references: { model: 'users', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
         type: DataTypes.INTEGER,
       },
-      sellerId:{
+      sellerId: {
         allowNull: false,
-        references:{ model: 'users', key: 'id'},
+        references: { model: 'users', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
         type: DataTypes.INTEGER,
       },
-      totalPrice: DataTypes.DECIMAL(9,2),
+      totalPrice: DataTypes.DECIMAL(9, 2),
       deliveryAddress: DataTypes.STRING,
       deliveryNumber: DataTypes.STRING,
-      saleDate: {defaultValue: sequelize.NOW, type: DataTypes.DATE },
+      saleDate: { defaultValue: sequelize.NOW, type: DataTypes.DATE },
       status: DataTypes.STRING,
     },
     {
@@ -37,8 +37,8 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
 
-  Sale.associate = (models) => { Sale.belongsTo(models.User, {foreignKey: 'userId'}) } 
-  Sale.associate = (models) => { Sale.belongsTo(models.User, {foreignKey: 'sellerId'}) }
- 
+  Sale.associate = (models) => { Sale.belongsTo(models.User, { foreignKey: 'userId' }) }
+  Sale.associate = (models) => { Sale.belongsTo(models.User, { foreignKey: 'sellerId' }) }
+
   return Sale;
 };
