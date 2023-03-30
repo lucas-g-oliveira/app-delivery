@@ -1,5 +1,6 @@
-import axios from 'axios';
 import React from 'react';
+import { Redirect } from 'react-router-dom';
+import { requestRegister } from '../services/requests';
 
 export default class Register extends React.Component {
   state = {
@@ -7,7 +8,8 @@ export default class Register extends React.Component {
     email: '',
     password: '',
     buttonEnabled: false,
-    message: '',
+    doneRegister: false,
+    errorRegister: false,
   };
 
   async componentDidUpdate() {
@@ -47,27 +49,40 @@ export default class Register extends React.Component {
     this.setState({ [eventName]: event.target.value });
   };
 
-  handleSubmit = (event) => {
+  // handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   const { username, email, password } = this.state;
+  //   axios
+  //     .post('localhost:3004/register', {
+  //       username,
+  //       email,
+  //       password,
+  //     })
+  //     .then((response) => {
+  //       const OK_STATUS = 201;
+  //       if (response.status === OK_STATUS) {
+  //         this.setState({ message: 'User created succesfully ' });
+  //       } else {
+  //         this.setState({ message: 'Some error occured' });
+  //       }
+  //       this.setState({ username: '' });
+  //       this.setState({ email: '' });
+  //       this.setState({ password: '' });
+  //     })
+  //     .catch((error) => console.log(error));
+  // };
+
+  handleSubmit = async (event) => {
     event.preventDefault();
     const { username, email, password } = this.state;
-    axios
-      .post('localhost:3004/register', {
-        username,
-        email,
-        password,
-      })
-      .then((response) => {
-        const OK_STATUS = 201;
-        if (response.status === OK_STATUS) {
-          this.setState({ message: 'User created succesfully ' });
-        } else {
-          this.setState({ message: 'Some error occured' });
-        }
-        this.setState({ username: '' });
-        this.setState({ email: '' });
-        this.setState({ password: '' });
-      })
-      .catch((error) => console.log(error));
+
+    try {
+      await requestRegister('/register', { username, email, password });
+      this.setState({ doneRegister: true });
+    } catch (error) {
+      this.setState({ doneRegister: false });
+      this.setState({ errorRegister: true });
+    }
   };
 
   render() {
@@ -76,8 +91,12 @@ export default class Register extends React.Component {
       email,
       password,
       buttonEnabled,
-      message,
+      doneRegister,
+      errorRegister,
     } = this.state;
+
+    if (doneRegister) return <Redirect to="/customer/products" />;
+
     return (
       <div>
         <div>
@@ -130,12 +149,15 @@ export default class Register extends React.Component {
               Cadastrar
             </button>
           </form>
-          <div
-            data-testid="common_register__element-invalid_register"
-            value={ message }
-          >
-            Elemento oculto (Mensagens de Erro)
-          </div>
+          {
+            (errorRegister)
+              ? (
+                <div data-testid="common_register__element-invalid_register">
+                  Usuário já cadastrado.
+                </div>
+              )
+              : null
+          }
         </div>
       </div>
     );
