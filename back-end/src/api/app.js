@@ -5,8 +5,9 @@ const route = require('../routes');
 const app = express();
 app.use(cors());
 app.use(express.json());
-app.use(route.userRoute);
 app.use(route.productRoute);
+app.use(route.orderRoute);
+app.use(route.userRoute);
 
 app.get('/coffee', (_req, res) => res.status(418).end());
 
