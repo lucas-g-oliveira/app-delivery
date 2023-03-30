@@ -56,49 +56,45 @@ function Login(props) {
 
   return (
     <section className="user-login-area">
-      <form>
-        <h1>Área do usuário</h1>
-        <label htmlFor="email-input">
-          <input
-            className="login__login_input"
-            type="text"
-            value={ email }
-            onChange={ ({ target: { value } }) => {
-              setEmail(value);
-              validadeInputs();
-            } }
-            data-testid="commom_login__input-email"
-            placeholder="Login"
-          />
-        </label>
-        <label htmlFor="password-input">
-          <input
-            type="password"
-            value={ password }
-            onChange={ ({ target: { value } }) => {
-              setPassword(value);
-              validadeInputs();
-            } }
-            data-testid="commom_login__input-password"
-            placeholder="Senha"
-          />
-        </label>
-        <button
-          data-testid="commom_login__button-login"
-          type="submit"
-          disabled={ isBtnDisabled }
-          onClick={ (event) => login(event) }
-        >
-          Entrar
-        </button>
-        <button
-          data-testid="commom_login__button-register"
-          type="submit"
-          onClick={ handleClick }
-        >
-          Registre-se
-        </button>
-      </form>
+      <h1>Área do usuário</h1>
+      <input
+        className="login__login_input"
+        type="text"
+        value={ email }
+        onChange={ ({ target: { value } }) => {
+          setEmail(value);
+          validadeInputs();
+        } }
+        data-testid="common_login__input-email"
+        placeholder="Login"
+      />
+      <label htmlFor="password-input">
+        <input
+          type="password"
+          value={ password }
+          onChange={ ({ target: { value } }) => {
+            setPassword(value);
+            validadeInputs();
+          } }
+          data-testid="common_login__input-password"
+          placeholder="Senha"
+        />
+      </label>
+      <button
+        data-testid="common_login__button-login"
+        type="submit"
+        disabled={ isBtnDisabled }
+        onClick={ (event) => login(event) }
+      >
+        Entrar
+      </button>
+      <button
+        data-testid="common_login__button-register"
+        type="submit"
+        onClick={ handleClick }
+      >
+        Registre-se
+      </button>
       {
         (failedTryLogin)
           ? (
