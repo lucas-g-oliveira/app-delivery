@@ -10,8 +10,10 @@ const login = async (email, password) => {
       email,
     },
   });
+
+  if (!user) throw customError(errorStatus.NOT_FOUND, errorMessages.INVALID_FIELDS);
   const isValidPass = md5(password) === user.password;
-  if (!user || !isValidPass) throw customError(errorStatus.NOT_FOUND, errorMessages.INVALID_FIELDS);
+  if (!isValidPass) throw customError(errorStatus.NOT_FOUND, errorMessages.INVALID_FIELDS);
   const token = encript({ email: user.email });
   return { token, role: user.role, name: user.name };
 };
