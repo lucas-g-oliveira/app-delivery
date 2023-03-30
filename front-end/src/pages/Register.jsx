@@ -11,9 +11,7 @@ export default class Register extends React.Component {
   };
 
   async componentDidUpdate() {
-    if (this.validaDados()) {
-      this.setState({ buttonEnabled: true });
-    }
+    this.validaDados();
   }
 
   validaNome = () => {
@@ -33,8 +31,16 @@ export default class Register extends React.Component {
     return password.length >= MIN_LENGTH;
   };
 
-  validaDados = () => this.validaNome()
-    && this.validaEmail() && this.validaPassword();
+  validaDados = () => {
+    const { buttonEnabled } = this.state;
+    if (this.validaNome() && this.validaEmail() && this.validaPassword()) {
+      if (!buttonEnabled) {
+        this.setState({ buttonEnabled: true });
+      }
+    } else if (buttonEnabled) {
+      this.setState({ buttonEnabled: false });
+    }
+  };
 
   handleEvent = (event) => {
     const eventName = event.target.name;

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { requestData, requestLogin, setToken } from '../services/requests';
+import { requestLogin, setToken, requestData } from '../services/requests';
 
 function Login(props) {
   const [email, setEmail] = useState('');
@@ -12,14 +12,14 @@ function Login(props) {
 
   const MIN_PASSWORD_LENGTH = 6;
 
-  const validadeInputs = useCallback(() => {
+  const validadeInputs = () => {
     const isEmailValid = /\S+@\S+\.\S+/.test(email);
     if (isEmailValid && password.length >= MIN_PASSWORD_LENGTH) {
       setIsBtnDisabled(false);
     } else {
       setIsBtnDisabled(true);
     }
-  }, [email, password]);
+  };
 
   const login = async (event) => {
     event.preventDefault();
@@ -49,7 +49,8 @@ function Login(props) {
   useEffect(() => {
     setFailedTryLogin(false);
     validadeInputs();
-  }, [email, password, validadeInputs]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [email, password]);
 
   if (isLogged) return <Redirect to="/customer/products" />;
 
