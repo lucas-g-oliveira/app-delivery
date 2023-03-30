@@ -13,8 +13,8 @@ const login = async (req, res, next) => {
 const register = async (req, res, next) => {
     const { name, email, password } = req.body;
     try {
-        const token = await userService.register(name, email, password);
-        return res.status(201).json(token);
+        const data = await userService.register(name, email, password);
+        return res.status(201).json(data);
     } catch (error) {
         next(error);
     }

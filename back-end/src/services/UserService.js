@@ -33,7 +33,8 @@ const userExist = async (name, email) => {
 
 const register = async (name, email, password) => {
   await userExist(name, email);
-  const newUser = await User.create({ name, email, password, role: 'custumer' });
+  const passwordCrypt = md5(password);
+  const newUser = await User.create({ name, email, password: passwordCrypt, role: 'customer' });
   const token = encript({ email: newUser.email });
   return { token, role: newUser.role, name: newUser.name };
 };

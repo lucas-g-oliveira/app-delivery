@@ -1,6 +1,6 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-import { requestRegister } from '../services/requests';
+import { requestRegister, setToken } from '../services/requests';
 
 export default class Register extends React.Component {
   state = {
@@ -54,7 +54,15 @@ export default class Register extends React.Component {
     const { name, email, password } = this.state;
 
     try {
-      await requestRegister('/register', { name, email, password });
+      const { token } = await requestRegister('/register', { name, email, password });
+      console.log(token);
+
+      setToken(token);
+      localStorage.setItem('name', name);
+      localStorage.setItem('email', email);
+      localStorage.setItem('token', token);
+      localStorage.setItem('role', 'customer');
+
       this.setState({ doneRegister: true });
     } catch (error) {
       this.setState({ doneRegister: false });
