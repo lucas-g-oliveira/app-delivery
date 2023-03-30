@@ -4,7 +4,7 @@ import { requestRegister } from '../services/requests';
 
 export default class Register extends React.Component {
   state = {
-    username: '',
+    name: '',
     email: '',
     password: '',
     buttonEnabled: false,
@@ -17,9 +17,9 @@ export default class Register extends React.Component {
   }
 
   validaNome = () => {
-    const { username } = this.state;
+    const { name } = this.state;
     const MIN_LENGTH = 12;
-    return username.length >= MIN_LENGTH;
+    return name.length >= MIN_LENGTH;
   };
 
   validaEmail = () => {
@@ -49,35 +49,12 @@ export default class Register extends React.Component {
     this.setState({ [eventName]: event.target.value });
   };
 
-  // handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   const { username, email, password } = this.state;
-  //   axios
-  //     .post('localhost:3004/register', {
-  //       username,
-  //       email,
-  //       password,
-  //     })
-  //     .then((response) => {
-  //       const OK_STATUS = 201;
-  //       if (response.status === OK_STATUS) {
-  //         this.setState({ message: 'User created succesfully ' });
-  //       } else {
-  //         this.setState({ message: 'Some error occured' });
-  //       }
-  //       this.setState({ username: '' });
-  //       this.setState({ email: '' });
-  //       this.setState({ password: '' });
-  //     })
-  //     .catch((error) => console.log(error));
-  // };
-
   handleSubmit = async (event) => {
     event.preventDefault();
-    const { username, email, password } = this.state;
+    const { name, email, password } = this.state;
 
     try {
-      await requestRegister('/register', { username, email, password });
+      await requestRegister('/register', { name, email, password });
       this.setState({ doneRegister: true });
     } catch (error) {
       this.setState({ doneRegister: false });
@@ -87,7 +64,7 @@ export default class Register extends React.Component {
 
   render() {
     const {
-      username,
+      name,
       email,
       password,
       buttonEnabled,
@@ -108,8 +85,8 @@ export default class Register extends React.Component {
               Nome
               <input
                 id="input-name"
-                name="username"
-                value={ username }
+                name="name"
+                value={ name }
                 data-testid="common_register__input-name"
                 type="text"
                 placeholder="Seu Nome"
