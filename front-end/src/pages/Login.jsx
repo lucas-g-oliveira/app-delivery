@@ -12,14 +12,14 @@ function Login(props) {
 
   const MIN_PASSWORD_LENGTH = 6;
 
-  const validadeInputs = () => {
+  const validadeInputs = useCallback(() => {
     const isEmailValid = /\S+@\S+\.\S+/.test(email);
     if (isEmailValid && password.length >= MIN_PASSWORD_LENGTH) {
       setIsBtnDisabled(false);
     } else {
       setIsBtnDisabled(true);
     }
-  };
+  }, [email, password]);
 
   const login = async (event) => {
     event.preventDefault();
@@ -49,8 +49,7 @@ function Login(props) {
   useEffect(() => {
     setFailedTryLogin(false);
     validadeInputs();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [email, password]);
+  }, [email, password, validadeInputs]);
 
   if (isLogged) return <Redirect to="/customer/products" />;
 
