@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { requestLogin, setToken, requestData } from '../services/requests';
+import { requestLogin, setToken } from '../services/requests';
 
 function Login(props) {
   const [email, setEmail] = useState('');
@@ -25,12 +25,11 @@ function Login(props) {
     event.preventDefault();
 
     try {
-      const { token } = await requestLogin('/login', { email, password });
+      const { token, role, name } = await requestLogin('/login', { email, password });
 
       setToken(token);
-
-      const { role } = await requestData('/login/role', { email, password });
-
+      localStorage.setItem('name', name);
+      localStorage.setItem('email', email);
       localStorage.setItem('token', token);
       localStorage.setItem('role', role);
 
@@ -98,7 +97,7 @@ function Login(props) {
       {
         (failedTryLogin)
           ? (
-            <p data-testid="login__input_invalid_login_alert">
+            <p data-testid="common_login__element-invalid-email">
               {
                 `O endereço de e-mail ou a senha não estão corretos.
                   Por favor, tente novamente.`
