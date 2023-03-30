@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import Login from './pages/Login';
 import Register from './pages/Register';
 
 class App extends React.Component {
@@ -8,7 +9,9 @@ class App extends React.Component {
     return (
       <BrowserRouter>
         <Switch>
-          <Route path="/register" component={ Register } />
+          <Redirect exact from="/" to="/login" />
+          <Route exact path="/login" component={ Login } />
+          <Route exact path="/register" component={ Register } />
         </Switch>
       </BrowserRouter>
     );
