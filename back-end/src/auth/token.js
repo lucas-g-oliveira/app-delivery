@@ -12,6 +12,7 @@ const jwtConfig = {
 const encript = (data) => jwt.sign(data, secret, jwtConfig);
 
 const decript = (token) => {
+  console.log(token);
   if (!token) throw customError(errorStatus.IS_REQUIRED, 'Token not found');
 
   try {
@@ -22,4 +23,9 @@ const decript = (token) => {
   }
 };
 
-module.exports = { encript, decript };
+const newToken = (user) => {
+  const token = encript({ email: user.email, role: user.role, userId: user.id });
+  return token;
+};
+
+module.exports = { encript, decript, newToken };

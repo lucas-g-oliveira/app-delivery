@@ -17,23 +17,27 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
       },
       sellerId: {
-        allowNull: false,
+        allowNull: true,
         references: { model: 'users', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
         type: DataTypes.INTEGER,
       },
-      totalPrice: DataTypes.DECIMAL(9, 2),
+      totalPrice: {
+        type: DataTypes.DECIMAL(9, 2),
+      },
       deliveryAddress: DataTypes.STRING,
       deliveryNumber: DataTypes.STRING,
       saleDate: { defaultValue: sequelize.NOW, type: DataTypes.DATE },
-      status: DataTypes.STRING,
+      status: {
+        type: DataTypes.STRING,
+        defaultValue: 'Pendente'
+      },
     },
     {
       timestamps: false,
       tableName: 'sales',
       underscored: true,
-      defaultScope: { attributes: { exclude: ['password'] } },
     }
   );
 
