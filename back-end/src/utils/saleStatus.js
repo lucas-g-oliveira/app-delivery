@@ -1,7 +1,3 @@
-const saleStatus = {
-    0: 'Pendente',
-    1: 'Preparando Em Trânsito',
-    2: 'Entregue',
-}; 
+const saleStatus = ['Pendente', 'Preparando', 'Em Trânsito', 'Entregue']; 
 
 module.exports = saleStatus;
