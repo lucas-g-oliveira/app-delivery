@@ -3,8 +3,10 @@ const validateToken = require('../middlewares/validateToken');
 const { SaleController } = require('../controllers');
 
 const router = express.Router();
+const customerOrders = '/customer/orders';
 
-router.post('/customer/orders', validateToken, SaleController.register);
-router.get('/customer/orders', validateToken, SaleController.order);
+router.post(customerOrders, validateToken, SaleController.register);
+router.get(customerOrders, validateToken, SaleController.order);
+router.put(`${customerOrders}/:id`, validateToken, SaleController.changeStatus);
 
 module.exports = router;

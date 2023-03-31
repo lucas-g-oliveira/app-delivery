@@ -1,5 +1,7 @@
 const db = require('../database/models/index');
 const { Sale, SalesProduct, Product } = require('../database/models');
+const { customError } = require('../utils/errors');
+const saleStatus = require('../utils/saleStatus');
 
 const register = async (saleData) => {
   const { userId, totalPrice, deliveryAddress, deliveryNumber, products } = saleData;
@@ -13,12 +15,11 @@ const register = async (saleData) => {
     }));
     await SalesProduct.bulkCreate(product, { transaction: t });
     await t.commit();
+    return sale.id;
   } catch (err) {
     await t.rollback();
     throw new Error(err);
   }
-  
-  return 'Order successfully completed';
 };
 
 const order = async (userId) => {
@@ -40,7 +41,19 @@ const order = async (userId) => {
   return orders;
 };
 
+const changeStatus = async ({ id, status }) => {
+  let rows;
+  if (!saleStatus.includes(status)) throw customError(400, 'invalid status');
+  try {
+    [rows] = await Sale.update({ status }, { where: { id } });
+  } catch (error) {
+    throw new Error(error);
+  }
+  if (rows === 0) throw customError(400, 'cannot be updated');
+};
+
 module.exports = {
   register,
   order,
+  changeStatus,
 };
