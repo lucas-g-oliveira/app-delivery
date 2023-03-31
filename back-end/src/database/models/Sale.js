@@ -15,6 +15,7 @@ module.exports = (sequelize, DataTypes) => {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
         type: DataTypes.INTEGER,
+        filed: "user_id"
       },
       sellerId: {
         allowNull: true,
@@ -22,6 +23,7 @@ module.exports = (sequelize, DataTypes) => {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
         type: DataTypes.INTEGER,
+        field: "seller_id"
       },
       totalPrice: {
         type: DataTypes.DECIMAL(9, 2),
