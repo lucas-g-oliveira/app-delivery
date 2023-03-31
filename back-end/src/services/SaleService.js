@@ -1,5 +1,5 @@
 const db = require('../database/models/index');
-const { Sale, SalesProduct } = require('../database/models');
+const { Sale, SalesProduct, Product } = require('../database/models');
 
 const register = async (saleData) => {
   const { userId, totalPrice, deliveryAddress, deliveryNumber, products } = saleData;
@@ -21,6 +21,26 @@ const register = async (saleData) => {
   return 'Order successfully completed';
 };
 
+const order = async (userId) => {
+  const orders = Sale.findAll({
+    where: { userId },
+     include: 
+      { 
+        model: SalesProduct, 
+        as: 'saleProducts', 
+        attributes: { exclude: ['saleId', 'SaleId', 'ProductId'] },
+        include: { 
+          model: Product, 
+          as: 'productDetails',
+          attributes: { exclude: ['urlImage', 'id'] },
+        },
+      },
+  });
+
+  return orders;
+};
+
 module.exports = {
   register,
+  order,
 };

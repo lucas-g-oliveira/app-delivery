@@ -28,8 +28,8 @@ module.exports = (sequelize, DataTypes) => {
       unique: true,
     });
 
-  SaleProduct.associate = (models) => { SaleProduct.belongsTo(models.Sale, { foreignKey: 'sale_id' }) }
-  SaleProduct.associate = (models) => { SaleProduct.belongsTo(models.Product, { foreignKey: 'product_id' }) }
+  SaleProduct.associate = (models) => { SaleProduct.belongsTo(models.Sale, { foreignKey: 'saleId' }) }
+  SaleProduct.associate = (models) => { SaleProduct.belongsTo(models.Product, { foreignKey: 'productId', as: 'productDetails' }) }
 
   return SaleProduct;
 };

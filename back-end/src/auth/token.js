@@ -12,7 +12,6 @@ const jwtConfig = {
 const encript = (data) => jwt.sign(data, secret, jwtConfig);
 
 const decript = (token) => {
-  console.log(token);
   if (!token) throw customError(errorStatus.IS_REQUIRED, 'Token not found');
 
   try {
