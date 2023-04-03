@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 function SaleCard({ id, status, date, price, address, addressNumber }) {
   return (
-    <div>
+    <a href={ `/seller/orders/${id}` }>
       <div>
         <div>
           Pedido
@@ -30,7 +30,7 @@ function SaleCard({ id, status, date, price, address, addressNumber }) {
           {`${address}, ${addressNumber}`}
         </div>
       </div>
-    </div>
+    </a>
   );
 }
 
