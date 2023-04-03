@@ -19,8 +19,8 @@ const login = async (email, password) => {
   if (!user) throw customError(errorStatus.NOT_FOUND, errorMessages.INVALID_FIELDS);
   const isValidPass = md5(password) === user.password;
   if (!isValidPass) throw customError(errorStatus.NOT_FOUND, errorMessages.INVALID_FIELDS);
-
   const token = newToken(user);
+  
   return { token, role: user.role, name: user.name };
 };
 
