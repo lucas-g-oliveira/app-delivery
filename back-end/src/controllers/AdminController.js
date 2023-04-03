@@ -20,7 +20,7 @@ const registerUser = async (req, res, next) => {
 };
 
 const deleteUser = async (req, res, next) => {
-  const { id: userToDelete } = req.body;
+  const { id: userToDelete } = req.params;
   try {
       await adminService.deleteUser(userToDelete);
       return res.status(204).send('done');
