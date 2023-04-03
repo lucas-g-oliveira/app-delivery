@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 
 export default class UserNavBar extends React.Component {
   render() {
-    const nomeCompleto = localStorage.getItem('name');
+    const user = JSON.parse(localStorage.getItem('user'));
+    const nomeCompleto = user.name;
     return (
       <nav>
         <Link
@@ -23,11 +24,13 @@ export default class UserNavBar extends React.Component {
         >
           {nomeCompleto}
         </span>
-        <span
+        <button
+          type="button"
           data-testid="customer_products__element-navbar-link-logout"
+          onClick={ () => localStorage.removeItem('user') }
         >
           Sair
-        </span>
+        </button>
       </nav>
     );
   }
