@@ -3,6 +3,7 @@ import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import Login from './pages/Login';
 import './App.css';
 import Register from './pages/Register';
+import CustomerProducts from './pages/CustomerProducts';
 import Products from './pages/customer/Products';
 
 function App() {
@@ -12,7 +13,7 @@ function App() {
         <Redirect exact from="/" to="/login" />
         <Route exact path="/login" component={ Login } />
         <Route exact path="/register" component={ Register } />
-        <Route exact path="/customer/products" component={ Products } />
+        <Route exact path="/customer/products" component={ CustomerProducts } />
       </Switch>
     </BrowserRouter>
   );

@@ -28,10 +28,7 @@ function Login(props) {
       const { token, role, name } = await requestLogin('/login', { email, password });
 
       setToken(token);
-      localStorage.setItem('name', name);
-      localStorage.setItem('email', email);
-      localStorage.setItem('token', token);
-      localStorage.setItem('role', role);
+      localStorage.setItem('user', JSON.stringify({ name, email, role, token }));
 
       setIsLogged(true);
     } catch (error) {
