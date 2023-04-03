@@ -58,11 +58,13 @@ export default class Register extends React.Component {
       console.log(token);
 
       setToken(token);
-      localStorage.setItem('name', name);
-      localStorage.setItem('email', email);
-      localStorage.setItem('token', token);
-      localStorage.setItem('role', 'customer');
-
+      const objStorage = {
+        name,
+        email,
+        token,
+        role: 'customer',
+      };
+      localStorage.setItem('user', JSON.stringify(objStorage));
       this.setState({ doneRegister: true });
     } catch (error) {
       this.setState({ doneRegister: false });
