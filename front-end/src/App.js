@@ -5,6 +5,7 @@ import './App.css';
 import Register from './pages/Register';
 import CustomerProducts from './pages/CustomerProducts';
 import SellerOrders from './pages/SellerOrders';
+import SellerOrdersDetails from './pages/SellerOrderDetails';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route exact path="/register" component={ Register } />
         <Route exact path="/customer/products" component={ CustomerProducts } />
         <Route exact path="/seller/orders" component={ SellerOrders } />
+        <Route exact path="/seller/orders/:id" component={ SellerOrdersDetails } />
       </Switch>
     </BrowserRouter>
   );

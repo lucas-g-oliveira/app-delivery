@@ -87,9 +87,23 @@ const changeStatus = async ({ userId, role, saleId }) => {
   if (rows === 0) throw customError(400, 'cannot be updated');
 };
 
+const detailsOrder = async ({ saleId }) => {
+  const salesProducts = await SalesProduct.findAll({
+    where: { saleId },
+    include:
+      {
+        model: Product,
+        as: 'productDetails',
+        attributes: { exclude: ['urlImage', 'id'] },
+      },
+  });
+  return salesProducts;
+};
+
 module.exports = {
   register,
   order,
   changeStatus,
   orderSeller,
+  detailsOrder,
 };
