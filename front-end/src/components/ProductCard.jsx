@@ -1,21 +1,37 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
+import { handleQuantityCart, getTotal } from '../util';
+import CartContext from '../Context/CartContext';
 
 function ProductCard({ price, img, drinkName, id }) {
   const [quantity, setQuantity] = useState(0);
+  const { setTotalPrice } = useContext(CartContext);
 
-  const handleIncrease = () => {
-    setQuantity(quantity + 1);
+  const handleIncrease = (event) => {
+    setQuantity((prevQuantity) => {
+      const newQuantity = prevQuantity + 1;
+      handleQuantityCart(event.target.name, newQuantity);
+      return newQuantity;
+    });
+    setTotalPrice(getTotal());
   };
 
-  const handleDecrease = () => {
+  const handleDecrease = (event) => {
     if (quantity > 0) {
-      setQuantity(quantity - 1);
+      setQuantity((prevQuantity) => {
+        const newQuantity = prevQuantity - 1;
+        handleQuantityCart(event.target.name, newQuantity);
+        return newQuantity;
+      });
+      setTotalPrice(getTotal());
     }
   };
 
   const handleQuantityChange = (event) => {
-    setQuantity(parseInt(event.target.value, 10) || 0);
+    const newQuantity = parseInt(event.target.value, 10) || 0;
+    handleQuantityCart(event.target.name, newQuantity);
+    setQuantity(newQuantity);
+    setTotalPrice(getTotal());
   };
 
   const handleQuantityBlur = () => {
@@ -42,6 +58,7 @@ function ProductCard({ price, img, drinkName, id }) {
         <button
           type="button"
           onClick={ handleDecrease }
+          name={ id }
           data-testid={ `customer_products__button-card-rm-item-${id}` }
         >
           -
@@ -49,6 +66,7 @@ function ProductCard({ price, img, drinkName, id }) {
         <input
           type="number"
           data-testid={ `customer_products__input-card-quantity-${id}` }
+          name={ id }
           value={ quantity }
           onChange={ handleQuantityChange }
           onBlur={ handleQuantityBlur }
@@ -57,6 +75,7 @@ function ProductCard({ price, img, drinkName, id }) {
         <button
           type="button"
           onClick={ handleIncrease }
+          name={ id }
           data-testid={ `customer_products__button-card-add-item-${id}` }
         >
           +
