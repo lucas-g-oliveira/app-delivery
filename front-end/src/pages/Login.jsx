@@ -48,7 +48,19 @@ function Login(props) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [email, password]);
 
-  if (isLogged) return <Redirect to="/customer/products" />;
+  if (isLogged) {
+    const user = JSON.parse(localStorage.getItem('user'));
+    const { role } = user;
+    switch (role) {
+    case 'seller':
+      return <Redirect to="/seller/orders" />;
+    case 'administrator':
+      return <Redirect to="/admin/manage" />;
+    default:
+      return <Redirect to="/customer/products" />;
+    }
+  }
+  // return <Redirect to="/customer/products" />;
 
   return (
     <section className="user-login-area">
