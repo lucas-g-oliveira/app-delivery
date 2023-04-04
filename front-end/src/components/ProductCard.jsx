@@ -2,25 +2,33 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 function ProductCard({ price, img, drinkName, id }) {
-  const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState(0);
 
   const handleIncrease = () => {
     setQuantity(quantity + 1);
   };
 
   const handleDecrease = () => {
-    if (quantity > 1) {
+    if (quantity > 0) {
       setQuantity(quantity - 1);
     }
   };
+
+  const handleQuantityChange = (event) => {
+    setQuantity(parseInt(event.target.value, 10) || 0);
+  };
+
+  const handleQuantityBlur = () => {
+    if (quantity < 0) {
+      setQuantity(0);
+    }
+  };
+
   return (
     <div>
       <h4 data-testid={ `customer_products__element-card-price-${id}` }>
         {
-          price.toLocaleString(
-            'pt-BR',
-            { minimumFractionDigits: 2, maximumFractionDigits: 2 },
-          )
+          price.replace(/\./, ',')
         }
       </h4>
       <img
@@ -42,7 +50,9 @@ function ProductCard({ price, img, drinkName, id }) {
           type="number"
           data-testid={ `customer_products__input-card-quantity-${id}` }
           value={ quantity }
-          readOnly
+          onChange={ handleQuantityChange }
+          onBlur={ handleQuantityBlur }
+          min="0"
         />
         <button
           type="button"
