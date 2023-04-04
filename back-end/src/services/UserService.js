@@ -10,6 +10,7 @@ const findByEmail = async (email) => {
       email,
     },
   });
+  if (!user) throw customError(errorStatus.NOT_FOUND, errorMessages.INVALID_FIELDS);
   return user;
 };
 
