@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 function CartButton(props) {
   const { totalPrice } = props;
@@ -13,5 +14,9 @@ function CartButton(props) {
     </Link>
   );
 }
+
+CartButton.propTypes = {
+  totalPrice: PropTypes.string.isRequired,
+};
 
 export default CartButton;
