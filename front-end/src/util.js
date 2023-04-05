@@ -31,7 +31,7 @@ const getTotal = () => {
   const data = getAll();
   const resultAll = data.filter((e) => e.subtotal);
   const total = resultAll.reduce((acc, curr) => acc + Number(curr.subtotal), 0);
-  return total.toFixed(2);
+  return total.toFixed(2).replace(/\./, ',');
 };
 
 const getQtdById = (id) => {
