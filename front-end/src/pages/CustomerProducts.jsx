@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import ProductCard from '../components/ProductCard';
 import { requestData } from '../services/requests';
 import UserNavBar from '../components/UserNavBar';
+import CartButton from '../components/CartButton';
+import CartContext from '../Context/CartContext';
 
 function CustomerProducts() {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const { totalPrice } = useContext(CartContext);
 
   useEffect(() => {
     const getDrinks = async () => {
@@ -13,6 +16,7 @@ function CustomerProducts() {
         const { data } = await requestData('/products');
         setProducts(data);
         setIsLoading(false);
+        localStorage.setItem('Carrinho', JSON.stringify(data));
       } catch (error) {
         console.error(error);
       }
@@ -33,12 +37,13 @@ function CustomerProducts() {
               key={ product.id }
               id={ product.id }
               drinkName={ product.name }
-              img={ product.url_image }
+              img={ product.urlImage }
               price={ product.price }
             />
           ))
         )}
       </div>
+      <CartButton { ...totalPrice } totalPrice={ totalPrice } />
     </div>
   );
 }
