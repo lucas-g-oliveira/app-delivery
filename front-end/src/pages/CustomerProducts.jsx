@@ -43,7 +43,7 @@ function CustomerProducts() {
           ))
         )}
       </div>
-      <CartButton { ...totalPrice } totalPrice={ totalPrice.toSring() } />
+      <CartButton { ...totalPrice } totalPrice={ totalPrice } />
     </div>
   );
 }
