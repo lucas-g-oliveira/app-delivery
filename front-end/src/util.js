@@ -39,4 +39,11 @@ const getQtdById = (id) => {
   return data.filter((e) => e.id === Number(id))[0].quantity || 0;
 };
 
-module.exports = { handleQuantityCart, getTotal, getAll, getQtdById };
+const removeItem = (id) => {
+  const data = getAll();
+  const filteredData = data.filter((e) => e.id !== Number(id));
+  replaceData(filteredData);
+  return getAll();
+};
+
+module.exports = { handleQuantityCart, getTotal, getAll, getQtdById, removeItem };
