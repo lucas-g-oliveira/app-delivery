@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
-import { handleQuantityCart, getTotal } from '../util';
+import { handleQuantityCart, getTotal, getQtdById } from '../util';
 import CartContext from '../Context/CartContext';
 
 function ProductCard({ price, img, drinkName, id }) {
@@ -8,22 +8,20 @@ function ProductCard({ price, img, drinkName, id }) {
   const { setTotalPrice } = useContext(CartContext);
 
   const handleIncrease = (event) => {
-    setQuantity((prevQuantity) => {
-      const newQuantity = prevQuantity + 1;
-      handleQuantityCart(event.target.name, newQuantity);
-      return newQuantity;
-    });
+    const qtd = getQtdById(event.target.name);
+    const newQuantity = handleQuantityCart(event.target.name, qtd + 1);
+    setQuantity(newQuantity);
     setTotalPrice(getTotal());
+    return newQuantity;
   };
 
   const handleDecrease = (event) => {
     if (quantity > 0) {
-      setQuantity((prevQuantity) => {
-        const newQuantity = prevQuantity - 1;
-        handleQuantityCart(event.target.name, newQuantity);
-        return newQuantity;
-      });
+      const qtd = getQtdById(event.target.name);
+      const newQuantity = handleQuantityCart(event.target.name, qtd - 1);
+      setQuantity(newQuantity);
       setTotalPrice(getTotal());
+      return newQuantity;
     }
   };
 
@@ -49,6 +47,7 @@ function ProductCard({ price, img, drinkName, id }) {
       </h4>
       <img
         src={ img }
+        width="150px"
         alt={ drinkName }
         data-testid={ `customer_products__img-card-bg-image-${id}` }
         className="drink-image"
@@ -89,7 +88,7 @@ function ProductCard({ price, img, drinkName, id }) {
 ProductCard.propTypes = {
   drinkName: PropTypes.string.isRequired,
   img: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
+  price: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,
 };
 

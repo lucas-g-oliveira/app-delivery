@@ -17,26 +17,29 @@ function replaceData(dataUpdated) {
 const handleQuantityCart = (id, quantity = 0) => {
   const data = getAll();
   const productToAdd = data.filter((e) => e.id === Number(id))[0];
-
   const filteredData = data.filter((e) => e.id !== Number(id));
   const updated = {
     ...productToAdd,
     quantity,
-    subtotal: Number(productToAdd.price) * quantity,
+    subtotal: (Number(productToAdd.price) * quantity).toFixed(2),
   };
   replaceData([...filteredData, updated]);
+  return quantity;
 };
 
 const getTotal = () => {
   const data = getAll();
   const resultAll = data.filter((e) => e.subtotal);
-  console.log(resultAll);
   const total = resultAll.reduce((acc, curr) => acc + Number(curr.subtotal), 0);
-  console.log(total);
-  return total;
+  return total.toFixed(2);
 };
 
-module.exports = { handleQuantityCart, getTotal, getAll };
+const getQtdById = (id) => {
+  const data = getAll();
+  return data.filter((e) => e.id === Number(id))[0].quantity || 0;
+};
+
+module.exports = { handleQuantityCart, getTotal, getAll, getQtdById };
 /* {
   "id": 1,
   "name": "Skol Lata 250ml",
