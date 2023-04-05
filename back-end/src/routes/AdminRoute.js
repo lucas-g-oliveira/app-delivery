@@ -6,8 +6,8 @@ const { adminController } = require('../controllers');
 const router = express.Router();
 const adminManage = '/admin/manage';
 
-router.get(adminManage, restrictToAdmin, validateToken, adminController.findAll);
-router.put(adminManage, restrictToAdmin, validateToken, adminController.registerUser);
-router.delete(`${adminManage}/:id`, restrictToAdmin, validateToken, adminController.deleteUser);
+router.get(adminManage, (restrictToAdmin, validateToken, adminController.findAll));
+router.put(adminManage, (restrictToAdmin, validateToken, adminController.registerUser));
+router.delete(`${adminManage}/:id`, (restrictToAdmin, validateToken, adminController.deleteUser));
 
 module.exports = router;
