@@ -1,27 +1,12 @@
-import React, { useState, useEffect } from 'react';
-// import { useParams } from 'react-router-dom';
-import { requestData } from '../services/requests';
+import React from 'react';
+import UserNavBar from '../components/UserNavBar';
+import SaleDetailsList from '../components/SaleDetailsList';
 
 function SaleDetails() {
-  const [sale, setSale] = useState();
-
-  useEffect(() => {
-    const getSale = async () => {
-      try {
-        const { data } = await requestData('/costumer/order');
-        setSale(data);
-        console.log(sale);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    getSale();
-  }, []);
-
   return (
     <div>
-      SaleDetails
+      <UserNavBar />
+      <SaleDetailsList />
     </div>
   );
 }
