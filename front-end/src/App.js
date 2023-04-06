@@ -18,6 +18,7 @@ function App() {
         <Route exact path="/register" component={ Register } />
         <Route exact path="/customer/checkout" component={ ConsumerCheckout } />
         <Route exact path="/seller/orders" component={ SellerOrders } />
+        <Route exact path="/customer/orders" component={ SellerOrders } />
         <Route exact path="/customer/orders/:id" component={ SaleDetails } />
         <CartProvider>
           <Route exact path="/customer/products" component={ CustomerProducts } />
