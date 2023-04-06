@@ -46,4 +46,13 @@ const removeItem = (id) => {
   return getAll();
 };
 
-module.exports = { handleQuantityCart, getTotal, getAll, getQtdById, removeItem };
+const clearCart = () => replaceData([]);
+
+module.exports = {
+  handleQuantityCart,
+  getTotal,
+  getAll,
+  getQtdById,
+  removeItem,
+  clearCart,
+};

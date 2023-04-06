@@ -5,15 +5,16 @@ const { customError } = require('../utils/errors');
 const saleStatus = require('../utils/saleStatus');
 
 const register = async (saleData) => {
-  const { userId, totalPrice, deliveryAddress, deliveryNumber, products } = saleData;
+  const { userId, totalPrice, deliveryAddress, deliveryNumber, products, sellerId } = saleData;
   const t = await db.sequelize.transaction();
 
   try {
-    const sale = await Sale.create({ userId, totalPrice, deliveryAddress, deliveryNumber, 
+    const sale = await Sale.create({ userId, totalPrice, deliveryAddress, deliveryNumber, sellerId,
     }, { transaction: t });
     const product = products.map((e) => ({ 
-      saleId: sale.id, productId: e.id, quantity: e.quantity, 
+      saleId: sale.id, productId: e.productId, quantity: e.quantity, 
     }));
+    console.log(product);
     await SalesProduct.bulkCreate(product, { transaction: t });
     await t.commit();
     return sale.id;
@@ -64,7 +65,7 @@ const orderSeller = async (sellerId) => {
   return orders;
 };
 
-const changeStatus = async ({ userId, role, saleId }) => {
+const changeStatus = async ({ role, saleId }) => {
   const { status } = await Sale.findOne({ where: { saleId } });
   const obj = {
     seller: {
@@ -74,9 +75,8 @@ const changeStatus = async ({ userId, role, saleId }) => {
     consumer: { [saleStatus[2]]: saleStatus[3] },
   };
 
-  let change = { status: obj[role][status] };
+  const change = { status: obj[role][status] };
   if (!change.status) throw customError(400, 'cannot be updated');
-  change = (change.status === saleStatus[1]) ? { ...change, sellerId: userId } : change;
 
   let rows;
   try {
