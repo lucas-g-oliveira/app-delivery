@@ -4,8 +4,6 @@ import ShippingDetails from '../components/ShippingDetails';
 import UserNavBar from '../components/UserNavBar';
 
 function ConsumerCheckout() {
-  console.log('consumerCheckout');
-
   return (
     <div>
       <UserNavBar />

@@ -106,7 +106,7 @@ function ShippingDetails() {
         </button>
       </form>
     </div>
-  ) : (<Redirect to={ `customer/orders/${redirect}` } />);
+  ) : (<Redirect to={ `orders/${redirect}` } />);
 }
 
 export default ShippingDetails;

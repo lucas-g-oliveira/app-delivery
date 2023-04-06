@@ -21,7 +21,6 @@ function CheckoutList() {
   useEffect(() => {
     const storageProducts = getAll();
     setProduct(storageProducts.filter((e) => e.quantity));
-    console.log(storageProducts);
   }, []);
 
   function deleteItem(id) {
@@ -56,13 +55,15 @@ function CheckoutList() {
     <div>
       <h2>Finalizar Pedido</h2>
       <table>
-        <th>Item</th>
-        <th>Descrição</th>
-        <th>Quantidade</th>
-        <th>Valor Unitário</th>
-        <th>Sub-total</th>
-        <th>Remover Item</th>
         <tbody>
+          <tr>
+            <th>Item</th>
+            <th>Descrição</th>
+            <th>Quantidade</th>
+            <th>Valor Unitário</th>
+            <th>Sub-total</th>
+            <th>Remover Item</th>
+          </tr>
           {product.map((e, i) => renderItem(e, i))}
         </tbody>
       </table>
