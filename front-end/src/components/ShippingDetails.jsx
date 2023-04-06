@@ -27,12 +27,13 @@ function ShippingDetails() {
 
   const handleSelectSeller = (event) => {
     setSellerSelected(event.target.value);
+    console.log(event.target.value);
   };
 
   const sendOrder = async () => {
     const itens = getAll().filter((e) => e.quantity);
     const body = {
-      sellerId: seller.filter((e) => e.name === sellerSelected)[0].id,
+      sellerId: sellerSelected,
       totalPrice: getTotal().replace(',', '.'),
       deliveryAddress: address,
       deliveryNumber: numberHouse,
@@ -50,7 +51,7 @@ function ShippingDetails() {
     const reqSellers = async () => {
       const data = await requestData('/seller');
       setSeller(data);
-      setSellerSelected(data[0].name);
+      setSellerSelected(data[0].id);
     };
     reqSellers();
   }, []);
@@ -67,7 +68,7 @@ function ShippingDetails() {
             value={ sellerSelected }
             onChange={ handleSelectSeller }
           >
-            {seller.map((e) => (<option key={ e.id }>{e.name}</option>))}
+            {seller.map((e) => (<option value={ e.id } key={ e.id }>{e.name}</option>))}
           </select>
         </label>
         <br />
