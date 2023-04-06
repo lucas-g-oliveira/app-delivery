@@ -30,17 +30,17 @@ function CheckoutList() {
   }
 
   function renderItem(item, i) {
-    const { id } = item;
+    // const { id } = item;
     return (
       <tr key={ item.id }>
-        <td className={ className((i + 1), 'id') }>{ i + 1 }</td>
-        <td className={ className(id, 'name') }>{item.name}</td>
-        <td className={ className(id, 'quantity') }>{item.quantity}</td>
-        <td className={ className(id, 'price') }>{item.price}</td>
-        <td className={ className(id, 'subtotal') }>{item.subtotal}</td>
+        <td data-testid={ className(i, 'id') }>{ i + 1 }</td>
+        <td data-testid={ className(i, 'name') }>{item.name}</td>
+        <td data-testid={ className(i, 'quantity') }>{item.quantity}</td>
+        <td data-testid={ className(i, 'price') }>{item.price.replace(/\./, ',')}</td>
+        <td data-testid={ className(i, 'subtotal') }>{item.subtotal.replace(/\./, ',')}</td>
         <td>
           <button
-            className={ className(item.id, 'btnRemove') }
+            data-testid={ className(i, 'btnRemove') }
             type="button"
             onClick={ () => deleteItem(item.id) }
           >
@@ -67,7 +67,7 @@ function CheckoutList() {
           {product.map((e, i) => renderItem(e, i))}
         </tbody>
       </table>
-      <h3>{getTotal()}</h3>
+      <h3 data-testid={ className(0, 'total') }>{getTotal()}</h3>
     </div>
   );
 }

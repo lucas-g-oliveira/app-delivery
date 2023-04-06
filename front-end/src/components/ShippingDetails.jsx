@@ -62,7 +62,7 @@ function ShippingDetails() {
         <label htmlFor="selectSeller">
           Vendedor(a) Responsável
           <select
-            className={ className.seller }
+            data-testid={ className.seller }
             id="selectSeller"
             value={ sellerSelected }
             onChange={ handleSelectSeller }
@@ -74,7 +74,7 @@ function ShippingDetails() {
         <label htmlFor="inputAddress">
           Endereço:
           <input
-            className={ className.address }
+            data-testid={ className.address }
             type="text"
             id="inputAddress"
             value={ address }
@@ -85,7 +85,7 @@ function ShippingDetails() {
         <label htmlFor="inputHouseNumber">
           Número:
           <input
-            className={ className.addressNumber }
+            data-testid={ className.addressNumber }
             type="number"
             id="inputHouseNumber"
             value={ numberHouse }
@@ -97,7 +97,7 @@ function ShippingDetails() {
         <br />
         <br />
         <button
-          className={ className.finishCheckout }
+          data-testid={ className.finishCheckout }
           disabled={ [sellerSelected, address, numberHouse].includes('') }
           type="button"
           onClick={ () => sendOrder() }
