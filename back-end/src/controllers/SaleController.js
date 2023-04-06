@@ -1,4 +1,4 @@
-const { saleService } = require('../services');
+const { saleService, userService } = require('../services');
 
 const register = async (req, res, next) => {
     const { userId } = req.user;
@@ -13,10 +13,21 @@ const register = async (req, res, next) => {
 };
 
 const order = async (req, res, next) => {
-    const { userId } = req.user;
+    const { userId, role } = req.user;
     try {
-        const orders = await saleService.order(userId);
+        const orders = await saleService.order(userId, role);
         return res.status(200).json({ data: orders });
+    } catch (error) {
+        next(error);
+    }
+};
+
+const orderById = async (req, res, next) => {
+    const { id } = req.params;
+    try {
+        const orders = await saleService.orderById(id);
+        const { name } = await userService.getUserById(id);
+        return res.status(200).json({ data: { orders, name } });
     } catch (error) {
         next(error);
     }
@@ -48,4 +59,5 @@ module.exports = {
     order,
     changeStatus,
     orderSeller,
+    orderById,
 };

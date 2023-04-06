@@ -24,9 +24,10 @@ const register = async (saleData) => {
   }
 };
 
-const order = async (userId) => {
+const order = async (id, role) => {
+  const teste = role === 'seller' ? 'sellerId' : 'userId';
   const orders = Sale.findAll({
-    where: { userId },
+    where: { [teste]: id },
      include: 
       { 
         model: SalesProduct, 
@@ -40,6 +41,23 @@ const order = async (userId) => {
       },
   });
 
+  return orders;
+};
+
+const orderById = async (id) => {
+  const orders = Sale.findByPk(id, {
+     include: 
+      { 
+        model: SalesProduct, 
+        as: 'saleProducts', 
+        attributes: { exclude: ['saleId', 'SaleId', 'ProductId'] },
+        include: { 
+          model: Product, 
+          as: 'productDetails',
+          attributes: { exclude: ['urlImage', 'id'] },
+        },
+      },
+  });
   return orders;
 };
 
@@ -92,4 +110,5 @@ module.exports = {
   order,
   changeStatus,
   orderSeller,
+  orderById,
 };

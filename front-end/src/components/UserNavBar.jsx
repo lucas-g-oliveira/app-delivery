@@ -8,7 +8,8 @@ class UserNavBar extends React.Component {
 
   handleLogout = () => {
     this.setState({ redirect: true });
-    // localStorage.removeItem('user');
+    localStorage.removeItem('user');
+    localStorage.removeItem('Carrinho');
   };
 
   render() {
