@@ -43,7 +43,7 @@ function CustomerProducts() {
           ))
         )}
       </div>
-      <CartButton { ...totalPrice } totalPrice={ totalPrice } />
+      <CartButton { ...totalPrice } totalPrice={ totalPrice.toString() } />
     </div>
   );
 }

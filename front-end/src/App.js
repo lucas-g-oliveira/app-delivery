@@ -6,6 +6,8 @@ import Register from './pages/Register';
 import CustomerProducts from './pages/CustomerProducts';
 import SellerOrders from './pages/SellerOrders';
 import CartProvider from './Context/CartProvider';
+import ConsumerCheckout from './pages/ConsumerCheckout';
+import SaleDetails from './pages/SaleDetails';
 
 function App() {
   return (
@@ -14,10 +16,12 @@ function App() {
         <Redirect exact from="/" to="/login" />
         <Route exact path="/login" component={ Login } />
         <Route exact path="/register" component={ Register } />
+        <Route exact path="/customer/checkout" component={ ConsumerCheckout } />
+        <Route exact path="/seller/orders" component={ SellerOrders } />
+        <Route exact path="/customer/orders/:id" component={ SaleDetails } />
         <CartProvider>
           <Route exact path="/customer/products" component={ CustomerProducts } />
         </CartProvider>
-        <Route exact path="/seller/orders" component={ SellerOrders } />
       </Switch>
     </BrowserRouter>
   );
