@@ -9,14 +9,14 @@ function SellerOrders() {
   const [isLoading, setIsLoading] = useState(true);
 
   const url = useLocation().pathname;
-  console.log(url);
+  // console.log(url);
 
   useEffect(() => {
     const getSales = async () => {
       try {
         const role = url.split('/')[1];
         const { token } = JSON.parse(localStorage.getItem('user'));
-        console.log(token);
+        // console.log(token);
         setToken(token);
         const { data } = await requestData(`/${role}/orders`);
         console.log(data);

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { TableCell, TableHead, Table, TableRow, TableBody } from '@mui/material';
-import { requestData } from '../services/requests';
+import { requestData, setToken } from '../services/requests';
 
 export default async function OrderDetailTable({ saleId }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -8,18 +8,30 @@ export default async function OrderDetailTable({ saleId }) {
 
   const dataTestPrefix = 'seller_order_details__element-order-table-';
 
-  useEffect(() => {
-    const getProducts = async () => {
-      try {
-        const { data } = await requestData(`seller/orders/${saleId}`);
-        setProducts(data);
-        setIsLoading(false);
-      } catch (error) {
-        console.error(error);
-      }
-    };
+  // useEffect(() => {
+  //   const getProducts = async () => {
+  //     try {
+  //       const { data } = await requestData(`seller/orders/${saleId}`);
+  //       setProducts(data);
+  //       setIsLoading(false);
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   };
 
-    getProducts();
+  //   getProducts();
+  // }, [saleId]);
+
+  useEffect(() => {
+    const getSale = async () => {
+      const { token } = JSON.parse(localStorage.getItem('user'));
+      setToken(token);
+      const { data } = await requestData(`/seller/orders/${saleId}`);
+      console.log(data);
+      setProducts(data);
+      setIsLoading(false);
+    };
+    getSale();
   }, [saleId]);
 
   return (
