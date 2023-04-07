@@ -54,10 +54,21 @@ const changeStatus = async (req, res, next) => {
     }
 };
 
+const detailsOrder = async (req, res, next) => {
+    const { id: saleId } = req.params;
+    try {
+        const details = await saleService.detailsOrder({ saleId });
+        return res.status(200).json({ data: details });
+    } catch (error) {
+        next(error);
+    }
+};
+
 module.exports = {
     register,
     order,
     changeStatus,
     orderSeller,
+    detailsOrder,
     orderById,
 };
