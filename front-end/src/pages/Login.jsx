@@ -45,6 +45,7 @@ function Login(props) {
   useEffect(() => {
     setFailedTryLogin(false);
     validadeInputs();
+    localStorage.removeItem('user');
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [email, password]);
 

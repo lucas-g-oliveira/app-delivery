@@ -1,10 +1,25 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
-export default class UserNavBar extends React.Component {
+class UserNavBar extends React.Component {
+  state = {
+    redirect: false,
+  };
+
+  handleLogout = () => {
+    this.setState({ redirect: true });
+    localStorage.removeItem('Carrinho');
+  };
+
   render() {
     const user = JSON.parse(localStorage.getItem('user'));
     const nomeCompleto = user.name;
+    const { redirect } = this.state;
+
+    if (redirect) {
+      return <Redirect to="/login" />;
+    }
+
     return (
       <nav>
         <Link
@@ -27,7 +42,7 @@ export default class UserNavBar extends React.Component {
         <button
           type="button"
           data-testid="customer_products__element-navbar-link-logout"
-          onClick={ () => localStorage.removeItem('user') }
+          onClick={ this.handleLogout }
         >
           Sair
         </button>
@@ -35,3 +50,5 @@ export default class UserNavBar extends React.Component {
     );
   }
 }
+
+export default (UserNavBar);

@@ -1,32 +1,35 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 function SaleCard({ id, status, date, price, address, addressNumber }) {
+  const url = useLocation().pathname;
+  const role = url.split('/')[1];
   return (
-    <a href={ `/seller/orders/${id}` }>
+    <a href={ `/${role}/orders/${id}` }>
       <div>
         <div>
           Pedido
         </div>
-        <div data-testid={ `seller_orders__element-order-id-${id}` }>
-          {saleId}
+        <div data-testid={ `${role}_orders__element-order-id-${id}` }>
+          {id}
         </div>
       </div>
       <div>
         <div>
-          <div data-testid={ `seller_orders__element-delivery-status-${id}` }>
+          <div data-testid={ `${role}_orders__element-delivery-status-${id}` }>
             {status}
           </div>
           <div>
-            <div data-testid={ `seller_orders__element-order-date-${id}` }>
+            <div data-testid={ `${role}_orders__element-order-date-${id}` }>
               {date}
             </div>
-            <div data-testid={ `seller_orders__element-card-price-${id}` }>
+            <div data-testid={ `${role}_orders__element-card-price-${id}` }>
               {`R$ ${price}`}
             </div>
           </div>
         </div>
-        <div data-testid={ `seller_orders__element-card-address-${id}` }>
+        <div data-testid={ `${role}_orders__element-card-address-${id}` }>
           {`${address}, ${addressNumber}`}
         </div>
       </div>
@@ -39,7 +42,7 @@ SaleCard.propTypes = {
   address: PropTypes.string.isRequired,
   addressNumber: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
+  price: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,
 };
 

@@ -10,6 +10,7 @@ const findByEmail = async (email) => {
       email,
     },
   });
+  if (!user) throw customError(errorStatus.NOT_FOUND, errorMessages.INVALID_FIELDS);
   return user;
 };
 
@@ -45,7 +46,24 @@ const register = async (name, email, password) => {
   return { token, role: newUser.role, name: newUser.name };
 };
 
+const getSeller = async () => {
+  const sellers = await User.findAll(
+    {
+      where: { role: 'seller' },
+      attributes: { exclude: ['password', 'email', 'role'] },
+    },
+    );
+  return sellers;
+};
+
+const getUserById = async (id) => {
+  const user = await User.findByPk(id);
+  return user;
+};
+
 module.exports = {
   login,
   register,
+  getSeller,
+  getUserById,
 };

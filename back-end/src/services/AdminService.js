@@ -31,9 +31,9 @@ const registerUser = async (name, email, password, role) => {
   return { token, role: newUser.role, name: newUser.name };
 };
 
-const deleteUser = async ({ userIdToDelete }) => {
+const deleteUser = async (id) => {
   try {
-    await User.destroy({ where: { id: userIdToDelete } });
+    await User.destroy({ where: { id } });
   } catch (erro) {
     throw new Error('could not delete');
   }

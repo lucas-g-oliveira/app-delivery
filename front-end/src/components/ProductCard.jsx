@@ -1,30 +1,53 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
+import { handleQuantityCart, getTotal, getQtdById } from '../util';
+import CartContext from '../Context/CartContext';
 
 function ProductCard({ price, img, drinkName, id }) {
-  const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState(0);
+  const { setTotalPrice } = useContext(CartContext);
 
-  const handleIncrease = () => {
-    setQuantity(quantity + 1);
+  const handleIncrease = (event) => {
+    const qtd = getQtdById(event.target.name);
+    const newQuantity = handleQuantityCart(event.target.name, qtd + 1);
+    setQuantity(newQuantity);
+    setTotalPrice(getTotal());
+    return newQuantity;
   };
 
-  const handleDecrease = () => {
-    if (quantity > 1) {
-      setQuantity(quantity - 1);
+  const handleDecrease = (event) => {
+    if (quantity > 0) {
+      const qtd = getQtdById(event.target.name);
+      const newQuantity = handleQuantityCart(event.target.name, qtd - 1);
+      setQuantity(newQuantity);
+      setTotalPrice(getTotal());
+      return newQuantity;
     }
   };
+
+  const handleQuantityChange = (event) => {
+    const newQuantity = parseInt(event.target.value, 10) || 0;
+    handleQuantityCart(event.target.name, newQuantity);
+    setQuantity(newQuantity);
+    setTotalPrice(getTotal());
+  };
+
+  const handleQuantityBlur = () => {
+    if (quantity < 0) {
+      setQuantity(0);
+    }
+  };
+
   return (
     <div>
       <h4 data-testid={ `customer_products__element-card-price-${id}` }>
         {
-          price.toLocaleString(
-            'pt-BR',
-            { minimumFractionDigits: 2, maximumFractionDigits: 2 },
-          )
+          price.replace(/\./, ',')
         }
       </h4>
       <img
         src={ img }
+        width="150px"
         alt={ drinkName }
         data-testid={ `customer_products__img-card-bg-image-${id}` }
         className="drink-image"
@@ -34,6 +57,7 @@ function ProductCard({ price, img, drinkName, id }) {
         <button
           type="button"
           onClick={ handleDecrease }
+          name={ id }
           data-testid={ `customer_products__button-card-rm-item-${id}` }
         >
           -
@@ -41,12 +65,16 @@ function ProductCard({ price, img, drinkName, id }) {
         <input
           type="number"
           data-testid={ `customer_products__input-card-quantity-${id}` }
+          name={ id }
           value={ quantity }
-          readOnly
+          onChange={ handleQuantityChange }
+          onBlur={ handleQuantityBlur }
+          min="0"
         />
         <button
           type="button"
           onClick={ handleIncrease }
+          name={ id }
           data-testid={ `customer_products__button-card-add-item-${id}` }
         >
           +
@@ -60,7 +88,7 @@ function ProductCard({ price, img, drinkName, id }) {
 ProductCard.propTypes = {
   drinkName: PropTypes.string.isRequired,
   img: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
+  price: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,
 };
 

@@ -20,7 +20,17 @@ const register = async (req, res, next) => {
     }
 };
 
+const getSeller = async (_req, res, next) => {
+    try {
+        const data = await userService.getSeller();
+        return res.status(200).json(data);
+    } catch (error) {
+        next(error);
+    }
+};
+
 module.exports = {
     login,
     register,
+    getSeller,
 };

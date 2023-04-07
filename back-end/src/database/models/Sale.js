@@ -30,14 +30,16 @@ module.exports = (sequelize, DataTypes) => {
       },
       deliveryAddress: DataTypes.STRING,
       deliveryNumber: DataTypes.STRING,
-      saleDate: { defaultValue: sequelize.NOW, type: DataTypes.DATE },
+      // saleDate: { defaultValue: sequelize.NOW, type: DataTypes.DATE },
       status: {
         type: DataTypes.STRING,
         defaultValue: 'Pendente'
       },
     },
     {
-      timestamps: false,
+      timestamps: true,
+      updatedAt:false,
+      createdAt: 'saleDate',
       tableName: 'sales',
       underscored: true,
     }
