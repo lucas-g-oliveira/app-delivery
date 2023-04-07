@@ -1,4 +1,3 @@
-const { Op } = require('sequelize');
 const db = require('../database/models/index');
 const { Sale, SalesProduct, Product } = require('../database/models');
 const { customError } = require('../utils/errors');
@@ -61,28 +60,6 @@ const orderById = async (id) => {
   return orders;
 };
 
-const orderSeller = async (sellerId) => {
-  const orders = Sale.findAll({
-    where: { [Op.or]: [
-      { sellerId },
-      { status: saleStatus[0] },
-    ] },
-     include: 
-      { 
-        model: SalesProduct, 
-        as: 'saleProducts', 
-        attributes: { exclude: ['saleId', 'SaleId', 'ProductId'] },
-        include: { 
-          model: Product, 
-          as: 'productDetails',
-          attributes: { exclude: ['urlImage', 'id'] },
-        },
-      },
-  });
-
-  return orders;
-};
-
 const changeStatus = async ({ role, saleId }) => {
   const { status } = await Sale.findOne({ where: { saleId } });
   const obj = {
@@ -122,7 +99,6 @@ module.exports = {
   register,
   order,
   changeStatus,
-  orderSeller,
   detailsOrder,
   orderById,
 };

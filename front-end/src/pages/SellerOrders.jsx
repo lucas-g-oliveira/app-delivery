@@ -27,7 +27,7 @@ function SellerOrders() {
       }
     };
     getSales();
-  }, []);
+  }, [url]);
 
   return (
     <div>

@@ -33,16 +33,6 @@ const orderById = async (req, res, next) => {
     }
 };
 
-const orderSeller = async (req, res, next) => {
-    const { sellerId } = req.user;
-    try {
-        const orders = await saleService.orderSeller(sellerId);
-        return res.status(200).json({ data: orders });
-    } catch (error) {
-        next(error);
-    }
-};
-
 const changeStatus = async (req, res, next) => {
     const { id: saleId } = req.params;
     const { role, id: userId } = req.user;
@@ -68,7 +58,6 @@ module.exports = {
     register,
     order,
     changeStatus,
-    orderSeller,
     detailsOrder,
     orderById,
 };
