@@ -26,7 +26,7 @@ const orderById = async (req, res, next) => {
     const { id } = req.params;
     try {
         const orders = await saleService.orderById(id);
-        const { name } = await userService.getUserById(id);
+        const { name } = await userService.getUserById(orders.sellerId);
         return res.status(200).json({ data: { orders, name } });
     } catch (error) {
         next(error);
