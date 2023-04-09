@@ -1,52 +1,60 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import { useParams } from 'react-router-dom';
 import UserNavBar from '../components/UserNavBar';
+import { setToken, requestData } from '../services/requests';
 import OrderDetailCard from '../components/OrderDetailCard';
 
-function SellerOrdersDetails(props) {
-  const { match } = props;
-  const { params } = match;
-  const { id } = params;
-  const [details, setDetails] = useState({});
+function SellerOrderDetails() {
+  const [sale, setSale] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  console.log(props);
 
-  const getDetails = async () => {
-    try {
-      const data = await requestData('/seller/orders');
-      const thisSale = data.filter((sales) => sales.id === id)[0];
-      const { status, date, price } = thisSale;
-      setDetails({ saleId, status, date, price });
-      setIsLoading(false);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const { id } = useParams();
+  console.log(id);
 
   useEffect(() => {
-    getDetails();
-  }, [getDetails]);
+    const getSale = async () => {
+      const { token } = JSON.parse(localStorage.getItem('user'));
+      setToken(token);
+
+      const { data } = await requestData('/seller/orders');
+      console.log(data);
+      const findSaleId = data.filter((venda) => JSON.stringify(venda.id) === id);
+      console.log(findSaleId[0]);
+      setSale(findSaleId[0]);
+
+      setIsLoading(false);
+    };
+    getSale();
+  }, [id]);
 
   return (
     <div>
-      {isLoading ? (
-        <p>Carregando...</p>
+      <UserNavBar />
+      {/* { isLoading ? (
+        <div> Carregando... </div>
+      ) : (<OrderDetailCard
+        id={ id }
+        status={ sale.status }
+        date={ sale.saleDate }
+        price={ sale.totalPrice }
+      />)} */}
+
+      { isLoading ? (
+        <div> Carregando... </div>
+      ) : (<OrderDetailCard
+        saleInfos={ sale }
+      />)}
+
+      {/* { isLoading ? (
+        <div> Carregando... </div>
       ) : (
-        (<UserNavBar />)(<OrderDetailCard
-          id={ id }
-          status={ details.status }
-          date={ details.date }
-          price={ details.price }
-        />)
-      )}
+        <div>
+          <div>{`${sale.status}`}</div>
+        </div>
+      )} */}
+
     </div>
   );
 }
 
-SellerOrdersDetails.propTypes = {
-  match: PropTypes.shape({
-    params: PropTypes.func.isRequired,
-  }).isRequired,
-};
-
-export default SellerOrdersDetails;
+export default SellerOrderDetails;

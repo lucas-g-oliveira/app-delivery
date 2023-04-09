@@ -45,18 +45,22 @@ const order = async (id, role) => {
 
 const orderById = async (id) => {
   const orders = Sale.findByPk(id, {
-     include: 
-      { 
-        model: SalesProduct, 
-        as: 'saleProducts', 
-        attributes: { exclude: ['saleId', 'SaleId', 'ProductId'] },
-        include: { 
-          model: Product, 
-          as: 'productDetails',
-          attributes: { exclude: ['urlImage', 'id'] },
-        },
+    include: {
+      model: SalesProduct, 
+      as: 'saleProducts', 
+      attributes: { exclude: ['saleId', 'SaleId', 'ProductId'] },
+      include: { 
+        model: Product, 
+        as: 'productDetails',
+        attributes: { exclude: ['urlImage', 'id'] },
       },
+    },
   });
+  return orders;
+};
+
+const orderByIdMod = async (id) => {
+  const orders = Sale.findOne({ where: { id } });
   return orders;
 };
 
@@ -82,23 +86,10 @@ const changeStatus = async ({ role, saleId }) => {
   if (rows === 0) throw customError(400, 'cannot be updated');
 };
 
-const detailsOrder = async ({ saleId }) => {
-  const salesProducts = await SalesProduct.findAll({
-    where: { saleId },
-    include:
-      {
-        model: Product,
-        as: 'productDetails',
-        attributes: { exclude: ['urlImage', 'id'] },
-      },
-  });
-  return salesProducts;
-};
-
 module.exports = {
   register,
   order,
   changeStatus,
-  detailsOrder,
   orderById,
+  orderByIdMod,
 };

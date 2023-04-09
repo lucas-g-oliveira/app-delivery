@@ -12,6 +12,6 @@ router.put(`${customerOrders}/:id`, validateToken, SaleController.changeStatus);
 router.get(`${customerOrders}/:id`, validateToken, SaleController.orderById);
 
 router.get(sellerOrders, validateToken, SaleController.order);
-router.get(`${sellerOrders}/:id`, validateToken, SaleController.detailsOrder);
+router.get(`${sellerOrders}/:id`, validateToken, SaleController.orderByIdMod);
 
 module.exports = router;
