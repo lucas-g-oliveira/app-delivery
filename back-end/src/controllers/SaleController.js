@@ -47,9 +47,9 @@ const orderByIdMod = async (req, res, next) => {
 
 const changeStatus = async (req, res, next) => {
     const { id: saleId } = req.params;
-    const { role, id: userId } = req.user;
+    const { role } = req.user;
     try {
-        await saleService.changeStatus({ userId, role, saleId });
+        await saleService.changeStatus({ role, saleId });
         return res.status(204).send();
     } catch (error) {
         next(error);

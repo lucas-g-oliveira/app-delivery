@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import OrderDetailTable from './OrderDetailTable';
+import { setToken, requestPut } from '../services/requests';
 
 function OrderDetailCard({ saleInfos }) {
   const { id, saleDate, status, totalPrice, saleProducts } = saleInfos;
 
-  const [isPreparing, setIsPreparing] = useState(false);
+  // const [statusStatus, setStatusStatus] = useState(status);
 
   const dataTestPrefix = 'seller_order_details__element-order-';
 
@@ -20,10 +21,12 @@ function OrderDetailCard({ saleInfos }) {
     return dataFormatada;
   }
 
-  function handlePreparing() {
-    if (!isPreparing) {
-      setIsPreparing(true);
-    }
+  async function handleStatus() {
+    const { token } = JSON.parse(localStorage.getItem('user'));
+    setToken(token);
+
+    const data = await requestPut(`/seller/orders/${id}`);
+    console.log(data);
   }
 
   return (
@@ -50,15 +53,14 @@ function OrderDetailCard({ saleInfos }) {
           <button
             type="button"
             data-testid="seller_order_details__button-preparing-check"
-            disabled={ isPreparing }
-            onClick={ handlePreparing }
+            disabled={ status !== 'Pendente' }
+            onClick={ handleStatus }
           >
             Preparar Pedido
           </button>
           <button
             type="button"
             data-testid="seller_order_details__button-dispatch-check"
-            disabled={ !isPreparing }
           >
             Saiu para Entrega
           </button>
