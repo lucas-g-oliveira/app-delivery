@@ -1,54 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import OrderDetailTable from './OrderDetailTable';
 
-// function OrderDetailCard({ id, status, date, price }) {
-//   const dataTestPrefix = 'seller_order_details__element-order-';
-//   return (
-//     <div>
-//       Detalhe do Pedido
-//       <div>
-//         <div>
-//           <div data-testid={ `${dataTestPrefix}label-order-id` }>
-//             {`Pedido ${id}`}
-//           </div>
-//           <div data-testid={ `${dataTestPrefix}label-order-date` }>
-//             {date}
-//           </div>
-//           <div data-testid={ `${dataTestPrefix}label-delivery-status` }>
-//             {status}
-//           </div>
-//           <button
-//             type="button"
-//             data-testid="seller_order_details__button-preparing-check"
-//           >
-//             Preparar Pedido
-//           </button>
-//           <button
-//             type="button"
-//             data-testid="seller_order_details__button-dispatch-check"
-//           >
-//             Saiu para Entrega
-//           </button>
-//         </div>
-//         {/* <OrderDetailTable saleId={ id } /> */}
-//         <div data-testid={ `${dataTestPrefix}total-price` }>
-//           {`Total: R$${price}`}
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
-
-// OrderDetailCard.propTypes = {
-//   status: PropTypes.string.isRequired,
-//   date: PropTypes.string.isRequired,
-//   price: PropTypes.string.isRequired,
-//   id: PropTypes.string.isRequired,
-// };
-
 function OrderDetailCard({ saleInfos }) {
   const { id, saleDate, status, totalPrice, saleProducts } = saleInfos;
+
+  const [isPreparing, setIsPreparing] = useState(false);
+
   const dataTestPrefix = 'seller_order_details__element-order-';
 
   function formatDate(data) {
@@ -60,6 +18,12 @@ function OrderDetailCard({ saleInfos }) {
       .padStart(2, '0')}/${ano}`;
 
     return dataFormatada;
+  }
+
+  function handlePreparing() {
+    if (!isPreparing) {
+      setIsPreparing(true);
+    }
   }
 
   return (
@@ -74,31 +38,34 @@ function OrderDetailCard({ saleInfos }) {
               marginTop: '10px' }
           }
         >
-          <div data-testid={ `${dataTestPrefix}label-order-id` }>
+          <div data-testid={ `${dataTestPrefix}details-label-order-id` }>
             {`Pedido ${id}`}
           </div>
-          <div data-testid={ `${dataTestPrefix}label-order-date` }>
+          <div data-testid={ `${dataTestPrefix}details-label-order-date` }>
             {formatDate(saleDate)}
           </div>
-          <div data-testid={ `${dataTestPrefix}label-delivery-status` }>
+          <div data-testid={ `${dataTestPrefix}details-label-delivery-status` }>
             {status}
           </div>
           <button
             type="button"
             data-testid="seller_order_details__button-preparing-check"
+            disabled={ isPreparing }
+            onClick={ handlePreparing }
           >
             Preparar Pedido
           </button>
           <button
             type="button"
             data-testid="seller_order_details__button-dispatch-check"
+            disabled={ !isPreparing }
           >
             Saiu para Entrega
           </button>
         </div>
         <OrderDetailTable saleProducts={ saleProducts } />
         <div data-testid={ `${dataTestPrefix}total-price` }>
-          {`Total: R$${totalPrice}`}
+          {`Total: R$${totalPrice.replace(/\./, ',')}`}
         </div>
       </div>
     </div>

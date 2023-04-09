@@ -39,13 +39,13 @@ function OrderDetailTable({ saleProducts }) {
                 align="right"
                 data-testid={ `${dataTestPrefix}unit-price-${index + 1}` }
               >
-                {`R$${product.productDetails.price}`}
+                {`R$${product.productDetails.price.replace(/\./, ',')}`}
               </TableCell>
               <TableCell
                 align="right"
                 data-testid={ `${dataTestPrefix}sub-total-${index + 1}` }
               >
-                {`R$${JSON.parse(product.productDetails.price) * product.quantity}`}
+                {`R$${(JSON.parse(product.productDetails.price) * product.quantity).toFixed(2).replace(/\./, ',')}`}
               </TableCell>
             </TableRow>
           )))
