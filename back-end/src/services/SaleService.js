@@ -60,15 +60,6 @@ const orderById = async (id) => {
 };
 
 const orderByIdMod = async (id) => {
-  // const orders = Sale.findOne({
-  //   where: { id },
-  //    include: 
-  //     { 
-  //       model: Sale, 
-  //       as: 'saleDetails', 
-  //       attributes: { exclude: ['id', 'userId', 'sellerId', 'saleId', 'SaleId', 'ProductId'] },
-  //     },
-  // });
   const orders = Sale.findOne({ where: { id } });
   return orders;
 };

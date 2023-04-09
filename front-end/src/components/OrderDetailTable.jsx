@@ -1,38 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { TableCell, TableHead, Table, TableRow, TableBody } from '@mui/material';
-import { requestData, setToken } from '../services/requests';
 
-export default async function OrderDetailTable({ saleId }) {
-  const [isLoading, setIsLoading] = useState(true);
-  const [products, setProducts] = useState([]);
-
+function OrderDetailTable({ saleProducts }) {
   const dataTestPrefix = 'seller_order_details__element-order-table-';
-
-  // useEffect(() => {
-  //   const getProducts = async () => {
-  //     try {
-  //       const { data } = await requestData(`seller/orders/${saleId}`);
-  //       setProducts(data);
-  //       setIsLoading(false);
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   };
-
-  //   getProducts();
-  // }, [saleId]);
-
-  useEffect(() => {
-    const getSale = async () => {
-      const { token } = JSON.parse(localStorage.getItem('user'));
-      setToken(token);
-      const { data } = await requestData(`/seller/orders/${saleId}`);
-      console.log(data);
-      setProducts(data);
-      setIsLoading(false);
-    };
-    getSale();
-  }, [saleId]);
 
   return (
     <Table aria-label="simple table">
@@ -46,30 +17,53 @@ export default async function OrderDetailTable({ saleId }) {
         </TableRow>
       </TableHead>
       <TableBody>
-        {isLoading ? (
-          <p>Carregando...</p>
-        ) : (
-          (products.map((product, index) => (
+        {
+          (saleProducts.map((product, index) => (
             <TableRow key={ index + 1 }>
               <TableCell data-testid={ `${dataTestPrefix}item-number-${index + 1}` }>
                 {index + 1}
               </TableCell>
-              <TableCell data-testid={ `${dataTestPrefix}name-${index + 1}` }>
+              <TableCell
+                align="right"
+                data-testid={ `${dataTestPrefix}name-${index + 1}` }
+              >
                 {product.productDetails.name}
               </TableCell>
-              <TableCell data-testid={ `${dataTestPrefix}quantity-${index + 1}` }>
+              <TableCell
+                align="right"
+                data-testid={ `${dataTestPrefix}quantity-${index + 1}` }
+              >
                 {product.quantity}
               </TableCell>
-              <TableCell data-testid={ `${dataTestPrefix}unit-price-${index + 1}` }>
+              <TableCell
+                align="right"
+                data-testid={ `${dataTestPrefix}unit-price-${index + 1}` }
+              >
                 {`R$${product.productDetails.price}`}
               </TableCell>
-              <TableCell data-testid={ `${dataTestPrefix}sub-total-${index + 1}` }>
-                {`R$${product.productDetails.price * product.quantity}`}
+              <TableCell
+                align="right"
+                data-testid={ `${dataTestPrefix}sub-total-${index + 1}` }
+              >
+                {`R$${JSON.parse(product.productDetails.price) * product.quantity}`}
               </TableCell>
             </TableRow>
           )))
-        )}
+        }
       </TableBody>
     </Table>
   );
 }
+
+OrderDetailTable.propTypes = {
+  saleProducts: PropTypes.arrayOf(PropTypes.shape({
+    productId: PropTypes.number.isRequired,
+    quantity: PropTypes.number.isRequired,
+    productDetails: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      price: PropTypes.string.isRequired,
+    }).isRequired,
+  })).isRequired,
+};
+
+export default OrderDetailTable;

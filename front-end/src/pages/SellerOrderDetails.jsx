@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import UserNavBar from '../components/UserNavBar';
 import { setToken, requestData } from '../services/requests';
-// import SellerDetailsPageComponent from '../components/SellerDetailsPageComponent';
 import OrderDetailCard from '../components/OrderDetailCard';
 
 function SellerOrderDetails() {
@@ -16,9 +15,13 @@ function SellerOrderDetails() {
     const getSale = async () => {
       const { token } = JSON.parse(localStorage.getItem('user'));
       setToken(token);
-      const { data } = await requestData(`/seller/orders/${id}`);
+
+      const { data } = await requestData('/seller/orders');
       console.log(data);
-      setSale(data);
+      const findSaleId = data.filter((venda) => JSON.stringify(venda.id) === id);
+      console.log(findSaleId[0]);
+      setSale(findSaleId[0]);
+
       setIsLoading(false);
     };
     getSale();
@@ -27,14 +30,29 @@ function SellerOrderDetails() {
   return (
     <div>
       <UserNavBar />
-      { isLoading ? (
+      {/* { isLoading ? (
         <div> Carregando... </div>
       ) : (<OrderDetailCard
         id={ id }
         status={ sale.status }
         date={ sale.saleDate }
         price={ sale.totalPrice }
+      />)} */}
+
+      { isLoading ? (
+        <div> Carregando... </div>
+      ) : (<OrderDetailCard
+        saleInfos={ sale }
       />)}
+
+      {/* { isLoading ? (
+        <div> Carregando... </div>
+      ) : (
+        <div>
+          <div>{`${sale.status}`}</div>
+        </div>
+      )} */}
+
     </div>
   );
 }
