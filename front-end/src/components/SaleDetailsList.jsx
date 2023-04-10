@@ -52,7 +52,7 @@ function SaleDetailsList() {
 
   function formatDate(data) {
     const date = new Date(data);
-    const dia = date.getUTCDate() - 1;
+    const dia = date.getUTCDate();
     const mes = date.getUTCMonth() + 1;
     const ano = date.getUTCFullYear();
     const dataFormatada = `${dia.toString().padStart(2, '0')}/${mes.toString()

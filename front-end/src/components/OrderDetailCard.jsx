@@ -1,14 +1,19 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import OrderDetailTable from './OrderDetailTable';
-import { setToken, requestPut } from '../services/requests';
+import { setToken, requestPatchStatus, requestData } from '../services/requests';
 
 function OrderDetailCard({ saleInfos }) {
-  const { id, saleDate, status, totalPrice, saleProducts } = saleInfos;
+  const { id, saleDate, totalPrice, saleProducts } = saleInfos;
+  let { status } = saleInfos;
+  console.log(typeof id);
+  console.log(id);
 
-  // const [statusStatus, setStatusStatus] = useState(status);
+  const [atualStatus, setAtualStatus] = useState(status);
+  const [changeStatus, setChangeStatus] = useState(false);
 
   const dataTestPrefix = 'seller_order_details__element-order-';
+  // const saleStatus = ['Pendente', 'Preparando', 'Em Trânsito', 'Entregue'];
 
   function formatDate(data) {
     const date = new Date(data);
@@ -21,13 +26,35 @@ function OrderDetailCard({ saleInfos }) {
     return dataFormatada;
   }
 
-  async function handleStatus() {
+  async function handleStatus(event) {
     const { token } = JSON.parse(localStorage.getItem('user'));
     setToken(token);
 
-    const data = await requestPut(`/seller/orders/${id}`);
-    console.log(data);
+    const button = event.target.name;
+    if (button === 'botao-preparar') {
+      await requestPatchStatus(`/seller/orders/${id}`, 'Preparando');
+    }
+    if (button === 'botao-entregar') {
+      await requestPatchStatus(`/seller/orders/${id}`, 'Em Trânsito');
+    }
+    setChangeStatus(!changeStatus);
   }
+
+  useEffect(() => {
+    const getSaleStatus = async () => {
+      const { token } = JSON.parse(localStorage.getItem('user'));
+      setToken(token);
+
+      const { data } = await requestData('/seller/orders');
+      // console.log(data);
+      // console.log(typeof data[0].id);
+      const findSaleId = data.filter((venda) => venda.id === id);
+      console.log(findSaleId[0]);
+      status = findSaleId[0].status;
+      setAtualStatus(findSaleId[0].status);
+    };
+    getSaleStatus();
+  }, [id, changeStatus]);
 
   return (
     <div>
@@ -48,19 +75,23 @@ function OrderDetailCard({ saleInfos }) {
             {formatDate(saleDate)}
           </div>
           <div data-testid={ `${dataTestPrefix}details-label-delivery-status` }>
-            {status}
+            {atualStatus}
           </div>
           <button
             type="button"
+            name="botao-preparar"
             data-testid="seller_order_details__button-preparing-check"
-            disabled={ status !== 'Pendente' }
+            disabled={ atualStatus !== 'Pendente' }
             onClick={ handleStatus }
           >
             Preparar Pedido
           </button>
           <button
             type="button"
+            name="botao-entregar"
             data-testid="seller_order_details__button-dispatch-check"
+            disabled={ atualStatus !== 'Preparando' }
+            onClick={ handleStatus }
           >
             Saiu para Entrega
           </button>

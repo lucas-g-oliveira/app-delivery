@@ -37,8 +37,6 @@ const orderByIdMod = async (req, res, next) => {
     const { id } = req.params;
     try {
         const orders = await saleService.orderByIdMod(id);
-        // const { name } = await userService.getUserById(orders.sellerId);
-        // return res.status(200).json({ data: { orders, name } });
         return res.status(200).json({ data: { orders } });
     } catch (error) {
         next(error);
@@ -47,10 +45,10 @@ const orderByIdMod = async (req, res, next) => {
 
 const changeStatus = async (req, res, next) => {
     const { id: saleId } = req.params;
-    const { role } = req.user;
+    const { status } = req.body;
     try {
-        await saleService.changeStatus({ role, saleId });
-        return res.status(204).send();
+        await saleService.changeStatus(saleId, status);
+        return res.status(204).send('OK');
     } catch (error) {
         next(error);
     }
