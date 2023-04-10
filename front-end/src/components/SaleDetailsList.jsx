@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { requestData, setToken } from '../services/requests';
+import { requestData, setToken, requestPatchStatus } from '../services/requests';
 
 function SaleDetailsList() {
   const { id } = useParams();
-  const [sale, setSale] = useState([]);
+  const [sale, setSale] = useState({});
+  const [changeStatus, setChangeStatus] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
   const sellerDtId = 'customer_order_details__element-order-details-label-seller-name';
@@ -35,7 +36,7 @@ function SaleDetailsList() {
       setIsLoading(false);
     };
     getSale();
-  }, []);
+  }, [id, changeStatus]);
 
   function renderItem(item, i) {
     const subtotal = Number(item.productDetails.price) * Number(item.quantity);
@@ -59,6 +60,14 @@ function SaleDetailsList() {
       .padStart(2, '0')}/${ano}`;
 
     return dataFormatada;
+  }
+
+  async function handleStatus() {
+    const { token } = JSON.parse(localStorage.getItem('user'));
+    setToken(token);
+
+    await requestPatchStatus(`/seller/orders/${id}`, 'Entregue');
+    setChangeStatus(!changeStatus);
   }
 
   return (
@@ -92,7 +101,8 @@ function SaleDetailsList() {
                 <button
                   type="button"
                   data-testid="customer_order_details__button-delivery-check"
-                  disabled
+                  disabled={ sale.orders.status !== 'Em Trânsito' }
+                  onClick={ handleStatus }
                 >
                   MARCAR COMO ENTREGUE
                 </button>
