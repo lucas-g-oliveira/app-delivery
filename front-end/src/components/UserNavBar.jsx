@@ -9,11 +9,12 @@ class UserNavBar extends React.Component {
   handleLogout = () => {
     this.setState({ redirect: true });
     localStorage.removeItem('Carrinho');
+    localStorage.removeItem('user');
   };
 
   render() {
     const user = JSON.parse(localStorage.getItem('user'));
-    const nomeCompleto = user.name;
+    const nomeCompleto = user && user.name;
     const { redirect } = this.state;
 
     if (redirect) {
