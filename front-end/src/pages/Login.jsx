@@ -45,7 +45,8 @@ function Login(props) {
   useEffect(() => {
     setFailedTryLogin(false);
     validadeInputs();
-    localStorage.removeItem('user');
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user) setIsLogged(true);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [email, password]);
 

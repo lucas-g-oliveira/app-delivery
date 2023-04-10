@@ -5,6 +5,18 @@ import PropTypes from 'prop-types';
 function SaleCard({ id, status, date, price, address, addressNumber }) {
   const url = useLocation().pathname;
   const role = url.split('/')[1];
+
+  function formatDate(data) {
+    const d = new Date(data);
+    const dia = d.getUTCDate();
+    const mes = d.getUTCMonth() + 1;
+    const ano = d.getUTCFullYear();
+    const dataFormatada = `${dia.toString().padStart(2, '0')}/${mes.toString()
+      .padStart(2, '0')}/${ano}`;
+
+    return dataFormatada;
+  }
+
   return (
     <a href={ `/${role}/orders/${id}` }>
       <div>
@@ -22,10 +34,10 @@ function SaleCard({ id, status, date, price, address, addressNumber }) {
           </div>
           <div>
             <div data-testid={ `${role}_orders__element-order-date-${id}` }>
-              {date}
+              {formatDate(date)}
             </div>
             <div data-testid={ `${role}_orders__element-card-price-${id}` }>
-              {`R$ ${price}`}
+              {price.replace(/\./, ',')}
             </div>
           </div>
         </div>
