@@ -9,7 +9,7 @@ function SellerOrderDetails() {
   const [isLoading, setIsLoading] = useState(true);
 
   const { id } = useParams();
-  console.log(id);
+  // console.log(id);
 
   useEffect(() => {
     const getSale = async () => {
@@ -17,9 +17,9 @@ function SellerOrderDetails() {
       setToken(token);
 
       const { data } = await requestData('/seller/orders');
-      console.log(data);
+      // console.log(data);
       const findSaleId = data.filter((venda) => JSON.stringify(venda.id) === id);
-      console.log(findSaleId[0]);
+      // console.log(findSaleId[0]);
       setSale(findSaleId[0]);
 
       setIsLoading(false);
@@ -30,28 +30,12 @@ function SellerOrderDetails() {
   return (
     <div>
       <UserNavBar />
-      {/* { isLoading ? (
-        <div> Carregando... </div>
-      ) : (<OrderDetailCard
-        id={ id }
-        status={ sale.status }
-        date={ sale.saleDate }
-        price={ sale.totalPrice }
-      />)} */}
 
       { isLoading ? (
         <div> Carregando... </div>
       ) : (<OrderDetailCard
         saleInfos={ sale }
       />)}
-
-      {/* { isLoading ? (
-        <div> Carregando... </div>
-      ) : (
-        <div>
-          <div>{`${sale.status}`}</div>
-        </div>
-      )} */}
 
     </div>
   );

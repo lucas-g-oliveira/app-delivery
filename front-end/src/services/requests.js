@@ -23,4 +23,14 @@ export const requestRegister = async (endpoint, body) => {
   return data;
 };
 
+export const requestPut = async (endpoint) => {
+  const { data } = await api.put(endpoint, {});
+  return data;
+};
+
+export const requestPatchStatus = async (endpoint, newStatus) => {
+  const { data } = await api.patch(endpoint, { status: newStatus });
+  return data;
+};
+
 export default api;

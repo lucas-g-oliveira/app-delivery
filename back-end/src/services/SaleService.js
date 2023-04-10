@@ -1,7 +1,7 @@
 const db = require('../database/models/index');
 const { Sale, SalesProduct, Product } = require('../database/models');
-const { customError } = require('../utils/errors');
-const saleStatus = require('../utils/saleStatus');
+// const { customError } = require('../utils/errors');
+// const saleStatus = require('../utils/saleStatus');
 
 const register = async (saleData) => {
   const { userId, totalPrice, deliveryAddress, deliveryNumber, products, sellerId } = saleData;
@@ -64,26 +64,34 @@ const orderByIdMod = async (id) => {
   return orders;
 };
 
-const changeStatus = async ({ role, saleId }) => {
-  const { status } = await Sale.findOne({ where: { saleId } });
-  const obj = {
-    seller: {
-      [saleStatus[0]]: saleStatus[1],
-      [saleStatus[1]]: saleStatus[2],
-    },
-    consumer: { [saleStatus[2]]: saleStatus[3] },
-  };
+// const changeStatus = async ({ role, saleId }) => {
+//   const { status } = await Sale.findOne({ where: { saleId } });
+//   const obj = {
+//     seller: {
+//       [saleStatus[0]]: saleStatus[1],
+//       [saleStatus[1]]: saleStatus[2],
+//     },
+//     consumer: { [saleStatus[2]]: saleStatus[3] },
+//   };
 
-  const change = { status: obj[role][status] };
-  if (!change.status) throw customError(400, 'cannot be updated');
+//   const change = { status: obj[role][status] };
+//   // if (!change.status) throw customError(400, 'cannot be updated');
 
-  let rows;
+//   let rows;
+//   try {
+//     [rows] = await Sale.update(change, { where: { id: saleId } });
+//   } catch (error) {
+//     throw new Error(error);
+//   }
+//   if (rows === 0) throw customError(400, 'cannot be updated');
+// };
+
+const changeStatus = async (saleId, newStatus) => {
   try {
-    [rows] = await Sale.update(change, { where: { id: saleId } });
+    await Sale.update({ status: newStatus }, { where: { id: saleId } });
   } catch (error) {
     throw new Error(error);
   }
-  if (rows === 0) throw customError(400, 'cannot be updated');
 };
 
 module.exports = {
