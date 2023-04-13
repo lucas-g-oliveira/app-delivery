@@ -1,4 +1,5 @@
 import './styles/bodyAplication.css';
+
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import UserNavBar from '../components/UserNavBar';
@@ -10,7 +11,6 @@ function SellerOrderDetails() {
   const [isLoading, setIsLoading] = useState(true);
 
   const { id } = useParams();
-  // console.log(id);
 
   useEffect(() => {
     const getSale = async () => {
@@ -18,9 +18,7 @@ function SellerOrderDetails() {
       setToken(token);
 
       const { data } = await requestData('/seller/orders');
-      // console.log(data);
       const findSaleId = data.filter((venda) => JSON.stringify(venda.id) === id);
-      // console.log(findSaleId[0]);
       setSale(findSaleId[0]);
 
       setIsLoading(false);

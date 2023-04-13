@@ -1,3 +1,4 @@
+import './styles/login.css';
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -66,20 +67,24 @@ function Login(props) {
 
   return (
     <section className="user-login-area">
-      <h1>Área do usuário</h1>
-      <input
-        className="login__login_input"
-        type="text"
-        value={ email }
-        onChange={ ({ target: { value } }) => {
-          setEmail(value);
-          validadeInputs();
-        } }
-        data-testid="common_login__input-email"
-        placeholder="Login"
-      />
+      <h1>Login</h1>
+      <label htmlFor="common_login__input-email">
+        <input
+          className="login__login_input"
+          name=""
+          type="text"
+          value={ email }
+          onChange={ ({ target: { value } }) => {
+            setEmail(value);
+            validadeInputs();
+          } }
+          data-testid="common_login__input-email"
+          placeholder="Login"
+        />
+      </label>
       <label htmlFor="password-input">
         <input
+          name="passwod-input"
           type="password"
           value={ password }
           onChange={ ({ target: { value } }) => {
@@ -90,21 +95,23 @@ function Login(props) {
           placeholder="Senha"
         />
       </label>
-      <button
-        data-testid="common_login__button-login"
-        type="submit"
-        disabled={ isBtnDisabled }
-        onClick={ (event) => login(event) }
-      >
-        Entrar
-      </button>
-      <button
-        data-testid="common_login__button-register"
-        type="submit"
-        onClick={ handleClick }
-      >
-        Registre-se
-      </button>
+      <div className="buttons">
+        <button
+          data-testid="common_login__button-login"
+          type="submit"
+          disabled={ isBtnDisabled }
+          onClick={ (event) => login(event) }
+        >
+          Entrar
+        </button>
+        <button
+          data-testid="common_login__button-register"
+          type="submit"
+          onClick={ handleClick }
+        >
+          Registre-se
+        </button>
+      </div>
       {
         (failedTryLogin)
           ? (

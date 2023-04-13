@@ -5,7 +5,7 @@ import { requestData } from '../services/requests';
 import UserNavBar from '../components/UserNavBar';
 import CartButton from '../components/CartButton';
 import CartContext from '../Context/CartContext';
-import { getAll, getTotal } from '../util';
+import { getAll, getTotal, replaceData } from '../util';
 // import { getAll } from '../util';
 
 function CustomerProducts() {
@@ -24,7 +24,7 @@ function CustomerProducts() {
         setProducts(items);
         setIsLoading(false);
         setTotalPrice(getTotal());
-        localStorage.setItem('Carrinho', JSON.stringify(items));
+        replaceData(items);
       } catch (error) {
         console.error(error);
       }

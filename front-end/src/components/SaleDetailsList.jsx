@@ -1,4 +1,4 @@
-import './styles/saleShipingDetails.css';
+// import './styles/orderDetailSeller.css';
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { requestData, setToken, requestPatchStatus } from '../services/requests';
@@ -71,63 +71,45 @@ function SaleDetailsList() {
     setChangeStatus(!changeStatus);
   }
 
-  return (
-    <div>
-      <h2>{`Detalher do pedido ${id}`}</h2>
-      {
-        isLoading ? (<div>Carregando...</div>)
-          : (
-            <div>
-              <div className="order-detail-user-info">
-                {/*  <h3
-                  data-testid={ label }
-                >
-                  {`PEDIDO ${id}`}
-                </h3> */}
-                <h3
-                  data-testid={ sellerDtId }
-                >
-                  {sale.name}
-                </h3>
-                <h3
-                  data-testid={ stt }
-                >
-                  {sale.orders.status}
-                </h3>
-                <h3
-                  data-testid={ dateDtId }
-                >
-                  {formatDate(sale.orders.saleDate)}
-                </h3>
-                <button
-                  type="button"
-                  data-testid="customer_order_details__button-delivery-check"
-                  disabled={ sale.orders.status !== 'Em Trânsito' }
-                  onClick={ handleStatus }
-                >
-                  MARCAR COMO ENTREGUE
-                </button>
-              </div>
-              <br />
-              <br />
-              <table>
-                <tbody>
-                  <tr>
-                    <th>Item</th>
-                    <th>Descrição</th>
-                    <th>Quantidade</th>
-                    <th>Valor Unitário</th>
-                    <th>Sub-total</th>
-                  </tr>
-                  {sale.orders.saleProducts.map((e, i) => renderItem(e, i))}
-                </tbody>
-              </table>
-              <h3 data-testid={ className(0, 'total') } className="total-checkout">
-                {`Total R$ ${sale.orders.totalPrice.replace(/\./, ',')}`}
-              </h3>
-            </div>
-          )
-      }
+  return isLoading ? (<div>Carregando...</div>) : (
+    <div className="order-detail-seller-card">
+      <h2>{`Detalhes do pedido ${id}`}</h2>
+      <div className="order-detail-head-info">
+        <h3 data-testid={ sellerDtId }>
+          {sale.name}
+        </h3>
+        <h3 data-testid={ stt }>
+          {sale.orders.status}
+        </h3>
+        <h3 data-testid={ dateDtId }>
+          {formatDate(sale.orders.saleDate)}
+        </h3>
+        <button
+          type="button"
+          data-testid="customer_order_details__button-delivery-check"
+          disabled={ sale.orders.status !== 'Em Trânsito' }
+          onClick={ handleStatus }
+        >
+          MARCAR COMO ENTREGUE
+        </button>
+      </div>
+      <br />
+      <br />
+      <table>
+        <tbody>
+          <tr>
+            <th>Item</th>
+            <th>Descrição</th>
+            <th>Quantidade</th>
+            <th>Valor Unitário</th>
+            <th>Sub-total</th>
+          </tr>
+          {sale.orders.saleProducts.map((e, i) => renderItem(e, i))}
+        </tbody>
+      </table>
+      <h3 data-testid={ className(0, 'total') } className="total-checkout">
+        {`Total R$ ${sale.orders.totalPrice.replace(/\./, ',')}`}
+      </h3>
     </div>
   );
 }

@@ -1,3 +1,4 @@
+import './styles/checkoutTable.css';
 import React from 'react';
 import PropTypes from 'prop-types';
 // import { TableCell, TableHead, Table, TableRow, TableBody } from '@mui/material';
@@ -6,7 +7,7 @@ function OrderDetailTable({ saleProducts }) {
   const dataTestPrefix = 'seller_order_details__element-order-table-';
 
   return (
-    <table>
+    <table className="table-order-details">
       <tr>
         <th>Item</th>
         <th align="right">Descrição</th>

@@ -1,4 +1,4 @@
-import './styles/orderDetailUserInfo.css';
+import './styles/orderDetailSeller.css';
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import OrderDetailTable from './OrderDetailTable';
@@ -12,7 +12,6 @@ function OrderDetailCard({ saleInfos }) {
   const [changeStatus, setChangeStatus] = useState(false);
 
   const dataTestPrefix = 'seller_order_details__element-order-';
-  // const saleStatus = ['Pendente', 'Preparando', 'Em Trânsito', 'Entregue'];
 
   function formatDate(data) {
     const date = new Date(data);
@@ -45,10 +44,7 @@ function OrderDetailCard({ saleInfos }) {
       setToken(token);
 
       const { data } = await requestData('/seller/orders');
-      // console.log(data);
-      // console.log(typeof data[0].id);
       const findSaleId = data.filter((venda) => venda.id === id);
-      console.log(findSaleId[0]);
       // eslint-disable-next-line react-hooks/exhaustive-deps
       status = findSaleId[0].status;
       setAtualStatus(findSaleId[0].status);
@@ -57,42 +53,39 @@ function OrderDetailCard({ saleInfos }) {
   }, [id, changeStatus]);
 
   return (
-    <div>
-      Detalhe do Pedido
-      <div>
-        <div className="order-detail-user-info">
-          <div data-testid={ `${dataTestPrefix}details-label-order-id` }>
-            {`Pedido ${id}`}
-          </div>
-          <div data-testid={ `${dataTestPrefix}details-label-order-date` }>
-            {formatDate(saleDate)}
-          </div>
-          <div data-testid={ `${dataTestPrefix}details-label-delivery-status` }>
-            {atualStatus}
-          </div>
-          <button
-            type="button"
-            name="botao-preparar"
-            data-testid="seller_order_details__button-preparing-check"
-            disabled={ atualStatus !== 'Pendente' }
-            onClick={ handleStatus }
-          >
-            Preparar Pedido
-          </button>
-          <button
-            type="button"
-            name="botao-entregar"
-            data-testid="seller_order_details__button-dispatch-check"
-            disabled={ atualStatus !== 'Preparando' }
-            onClick={ handleStatus }
-          >
-            Saiu para Entrega
-          </button>
-        </div>
-        <OrderDetailTable saleProducts={ saleProducts } />
-        <div className="total-checkout" data-testid={ `${dataTestPrefix}total-price` }>
-          {`Total: R$${totalPrice.replace(/\./, ',')}`}
-        </div>
+    <div className="order-detail-seller-card">
+      <h2 data-testid={ `${dataTestPrefix}details-label-order-id` }>
+        {`Detalhes do Pedido ${id}`}
+      </h2>
+      <div className="order-detail-head-info">
+        <h3 data-testid={ `${dataTestPrefix}details-label-order-date` }>
+          {formatDate(saleDate)}
+        </h3>
+        <h3 data-testid={ `${dataTestPrefix}details-label-delivery-status` }>
+          {atualStatus}
+        </h3>
+        <button
+          type="button"
+          name="botao-preparar"
+          data-testid="seller_order_details__button-preparing-check"
+          disabled={ atualStatus !== 'Pendente' }
+          onClick={ handleStatus }
+        >
+          Preparar Pedido
+        </button>
+        <button
+          type="button"
+          name="botao-entregar"
+          data-testid="seller_order_details__button-dispatch-check"
+          disabled={ atualStatus !== 'Preparando' }
+          onClick={ handleStatus }
+        >
+          Saiu para Entrega
+        </button>
+      </div>
+      <OrderDetailTable saleProducts={ saleProducts } />
+      <div className="total-checkout" data-testid={ `${dataTestPrefix}total-price` }>
+        {`Total: R$${totalPrice.replace(/\./, ',')}`}
       </div>
     </div>
   );

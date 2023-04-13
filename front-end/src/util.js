@@ -1,16 +1,30 @@
+function criptografar(texto) {
+  const alfabeto = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  const cifra = 'NOPQRSTUVWXYZnopqrstuvwxyzABCDEFGHIJKLMabcdefghijklm4567890123';
+  resultado = texto
+    .split('').map((e) => alfabeto
+      .indexOf(e)).map((j) => cifra[j]).join('');
+  return resultado;
+}
+
+const keyCart = () => {
+  const user = JSON.parse(localStorage.getItem('user'));
+  return criptografar(user.email.toString().replace(/[@.]/g, ''));
+};
+
 function getAll() {
-  const keyStorage = 'Carrinho';
-  const data = localStorage.getItem(keyStorage);
+  console.log('util');
+  console.log(keyCart());
+  const data = localStorage.getItem(keyCart());
   if (data === null) {
-    localStorage.setItem(keyStorage, JSON.stringify([]));
-    return JSON.parse(localStorage.getItem(keyStorage));
+    localStorage.setItem(keyCart(), JSON.stringify([]));
+    return JSON.parse(localStorage.getItem(keyCart()));
   }
-  return JSON.parse(localStorage.getItem(keyStorage));
+  return JSON.parse(localStorage.getItem(keyCart()));
 }
 
 function replaceData(dataUpdated) {
-  const keyStorage = 'Carrinho';
-  localStorage.setItem(keyStorage, JSON.stringify(dataUpdated));
+  localStorage.setItem(keyCart(), JSON.stringify(dataUpdated));
   return 'ok';
 }
 
@@ -47,7 +61,9 @@ const removeItem = (id) => {
   return getAll();
 };
 
-const clearCart = () => replaceData([]);
+const logoutUser = () => localStorage.removeItem('user');
+const clearCart = () => localStorage.removeItem(keyCart());
+const getUser = () => JSON.parse(localStorage.getItem('user'));
 
 module.exports = {
   handleQuantityCart,
@@ -56,4 +72,7 @@ module.exports = {
   getQtdById,
   removeItem,
   clearCart,
+  logoutUser,
+  replaceData,
+  getUser,
 };

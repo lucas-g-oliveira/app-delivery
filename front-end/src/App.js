@@ -20,8 +20,8 @@ function App() {
         <Route exact path="/customer/checkout" component={ ConsumerCheckout } />
         <Route exact path="/seller/orders" component={ SellerOrders } />
         <Route exact path="/seller/orders/:id" component={ SellerOrdersDetails } />
-        <Route exact path="/customer/orders" component={ SellerOrders } />
         <Route exact path="/customer/orders/:id" component={ SaleDetails } />
+        <Route exact path="/customer/orders" component={ SellerOrders } />
         <CartProvider>
           <Route exact path="/customer/products" component={ CustomerProducts } />
         </CartProvider>

@@ -1,0 +1,24 @@
+.order-detail-seller-card{
+  margin-top: 87px;
+  width: 1000px;
+  background-color: #eee;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-items: center;
+  border: solid #818dba 1px;
+  border-radius: 5px;
+}
+
+.order-detail-head-info{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 95%;
+  background-color: white;
+  padding: 10px;
+  border: solid #818dba 1px;
+  border-radius: 15px;
+  margin-bottom: 50px;
+}
