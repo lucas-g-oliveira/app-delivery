@@ -1,10 +1,11 @@
+import './styles/productCard.css';
 import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import { handleQuantityCart, getTotal, getQtdById } from '../util';
 import CartContext from '../Context/CartContext';
 
-function ProductCard({ price, img, drinkName, id }) {
-  const [quantity, setQuantity] = useState(0);
+function ProductCard({ price, img, drinkName, id, qtdParam }) {
+  const [quantity, setQuantity] = useState(qtdParam);
   const { setTotalPrice } = useContext(CartContext);
 
   const handleIncrease = (event) => {
@@ -39,10 +40,10 @@ function ProductCard({ price, img, drinkName, id }) {
   };
 
   return (
-    <div>
+    <div className="card">
       <h4 data-testid={ `customer_products__element-card-price-${id}` }>
         {
-          price.replace(/\./, ',')
+          `R$ ${price.replace(/\./, ',')}`
         }
       </h4>
       <img
@@ -86,6 +87,7 @@ function ProductCard({ price, img, drinkName, id }) {
 }
 
 ProductCard.propTypes = {
+  qtdParam: PropTypes.number.isRequired,
   drinkName: PropTypes.string.isRequired,
   img: PropTypes.string.isRequired,
   price: PropTypes.string.isRequired,

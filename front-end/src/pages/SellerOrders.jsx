@@ -1,3 +1,4 @@
+import './styles/customerProducts.css';
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import UserNavBar from '../components/UserNavBar';
@@ -9,17 +10,14 @@ function SellerOrders() {
   const [isLoading, setIsLoading] = useState(true);
 
   const url = useLocation().pathname;
-  // console.log(url);
 
   useEffect(() => {
     const getSales = async () => {
       try {
         const role = url.split('/')[1];
         const { token } = JSON.parse(localStorage.getItem('user'));
-        // console.log(token);
         setToken(token);
         const { data } = await requestData(`/${role}/orders`);
-        console.log(data);
         setSales(data);
         setIsLoading(false);
       } catch (error) {
@@ -36,19 +34,21 @@ function SellerOrders() {
       ) : (
         <div>
           <UserNavBar />
-          {
-            sales.map((sale) => (
-              <SaleCard
-                key={ sale.id }
-                id={ sale.id }
-                status={ sale.status }
-                address={ sale.deliveryAddress }
-                addressNumber={ sale.deliveryNumber }
-                price={ sale.totalPrice }
-                date={ sale.saleDate }
-              />
-            ))
-          }
+          <div className="product-page">
+            {
+              sales.map((sale) => (
+                <SaleCard
+                  key={ sale.id }
+                  id={ sale.id }
+                  status={ sale.status }
+                  address={ sale.deliveryAddress }
+                  addressNumber={ sale.deliveryNumber }
+                  price={ sale.totalPrice }
+                  date={ sale.saleDate }
+                />
+              ))
+            }
+          </div>
         </div>
       )}
     </div>

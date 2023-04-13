@@ -1,0 +1,8 @@
+.body-aplication {
+  display: flex;
+  margin-top: 138px;
+  justify-content: space-evenly;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+}

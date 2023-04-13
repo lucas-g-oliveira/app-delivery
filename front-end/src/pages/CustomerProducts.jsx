@@ -1,34 +1,41 @@
+import './styles/customerProducts.css';
 import React, { useState, useEffect, useContext } from 'react';
 import ProductCard from '../components/ProductCard';
 import { requestData } from '../services/requests';
 import UserNavBar from '../components/UserNavBar';
 import CartButton from '../components/CartButton';
 import CartContext from '../Context/CartContext';
+import { getAll, getTotal } from '../util';
+// import { getAll } from '../util';
 
 function CustomerProducts() {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const { totalPrice } = useContext(CartContext);
+  const { totalPrice, setTotalPrice } = useContext(CartContext);
 
   useEffect(() => {
     const getDrinks = async () => {
       try {
+        const storage = getAll();
         const { data } = await requestData('/products');
-        setProducts(data);
+        const items = data.map((e) => (storage
+          .some(((j) => j.id === e.id)) ? storage.find((j) => j.id === e.id) : e));
+
+        setProducts(items);
         setIsLoading(false);
-        localStorage.setItem('Carrinho', JSON.stringify(data));
+        setTotalPrice(getTotal());
+        localStorage.setItem('Carrinho', JSON.stringify(items));
       } catch (error) {
         console.error(error);
       }
     };
-
     getDrinks();
-  }, []);
+  }, [setTotalPrice]);
 
   return (
-    <div>
+    <div className="product-page">
       <UserNavBar />
-      <div>
+      <div className="product-grid">
         {isLoading ? (
           <p>Carregando...</p>
         ) : (
@@ -39,6 +46,7 @@ function CustomerProducts() {
               drinkName={ product.name }
               img={ product.urlImage }
               price={ product.price }
+              qtdParam={ product.quantity || 0 }
             />
           ))
         )}

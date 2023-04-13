@@ -1,0 +1,48 @@
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
+label select,
+label input {
+  width: 500px;
+  padding: 5px;
+  font-size: 18px;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+label select {
+  appearance: none;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3E%3Cpath fill='%236b7280' d='M4 6L0 2h8z'/%3E%3C/svg%3E") no-repeat right center;
+  background-size: 12px;
+}
+
+button {
+  font-size: 18px;
+  color: #fff;
+  background-color: #06c;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+button:hover:not(:disabled) {
+  background-color: #055;
+}

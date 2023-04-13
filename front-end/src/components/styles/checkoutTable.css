@@ -1,0 +1,63 @@
+/* estilos para tabela */
+table {
+  /* border-collapse: collapse; */
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  text-align: center;
+}
+
+/* estilos para cabeçalho */
+thead {
+  background-color: #f8f8f8;
+  color: #333;
+}
+
+thead th {
+  font-weight: bold;
+  padding: 10px;
+}
+
+/* estilos para corpo da tabela */
+tbody {
+  background-color: #fff;
+  color: #333;
+}
+
+tbody td {
+  padding: 10px;
+}
+
+/* estilos para linhas alternadas */
+tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+/* estilos para botões */
+/* button {
+  background-color: #6e8dd6;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  padding: 8px 12px;
+  font-size: 16px;
+  cursor: pointer;
+  margin: 0 5px;
+  transition: background-color 0.2s ease;
+} */
+
+button:hover {
+  background-color: #5067b8;
+}
+
+.total-checkout{
+  border: 2px solid #ffce00;
+  background-color: #fff7cc;
+  color: #333;
+  padding: 5px;
+  display: inline-block;
+  font-size: 1.7rem;
+  font-weight: bold;
+}

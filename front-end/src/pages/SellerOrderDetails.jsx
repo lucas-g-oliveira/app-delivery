@@ -1,3 +1,4 @@
+import './styles/bodyAplication.css';
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import UserNavBar from '../components/UserNavBar';
@@ -28,7 +29,7 @@ function SellerOrderDetails() {
   }, [id]);
 
   return (
-    <div>
+    <div className="product-page">
       <UserNavBar />
 
       { isLoading ? (

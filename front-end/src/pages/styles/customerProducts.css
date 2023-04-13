@@ -1,0 +1,15 @@
+.product-page {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-top: 78px;
+  justify-content: center;
+
+}
+
+.product-grid{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 1300px;
+}

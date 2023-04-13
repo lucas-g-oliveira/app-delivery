@@ -1,3 +1,4 @@
+import './styles/saleShipingDetails.css';
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { requestData, setToken, requestPatchStatus } from '../services/requests';
@@ -11,7 +12,7 @@ function SaleDetailsList() {
   const sellerDtId = 'customer_order_details__element-order-details-label-seller-name';
   const stt = `customer_order_details__element-order-details-label-delivery-status${id}`;
   const dateDtId = 'customer_order_details__element-order-details-label-order-date';
-  const label = 'customer_order_details__element-order-details-label-order-id';
+  // const label = 'customer_order_details__element-order-details-label-order-id';
 
   const className = (idProduct, key) => {
     const keys = {
@@ -45,8 +46,8 @@ function SaleDetailsList() {
         <td data-testid={ className(i, 'id') }>{ i + 1 }</td>
         <td data-testid={ className(i, 'name') }>{item.productDetails.name}</td>
         <td data-testid={ className(i, 'quantity') }>{item.quantity}</td>
-        <td data-testid={ className(i, 'price') }>{item.productDetails.price.replace(/\./, ',')}</td>
-        <td data-testid={ className(i, 'subtotal') }>{subtotal.toString().replace(/\./, ',')}</td>
+        <td data-testid={ className(i, 'price') }>{`R$ ${item.productDetails.price.replace(/\./, ',')}`}</td>
+        <td data-testid={ className(i, 'subtotal') }>{`R$ ${subtotal.toFixed(2).toString().replace(/\./, ',')}`}</td>
       </tr>
     );
   }
@@ -72,17 +73,17 @@ function SaleDetailsList() {
 
   return (
     <div>
-      <h2>Detalher do pedido</h2>
+      <h2>{`Detalher do pedido ${id}`}</h2>
       {
         isLoading ? (<div>Carregando...</div>)
           : (
             <div>
-              <div>
-                <h3
+              <div className="order-detail-user-info">
+                {/*  <h3
                   data-testid={ label }
                 >
                   {`PEDIDO ${id}`}
-                </h3>
+                </h3> */}
                 <h3
                   data-testid={ sellerDtId }
                 >
@@ -107,6 +108,8 @@ function SaleDetailsList() {
                   MARCAR COMO ENTREGUE
                 </button>
               </div>
+              <br />
+              <br />
               <table>
                 <tbody>
                   <tr>
@@ -119,7 +122,9 @@ function SaleDetailsList() {
                   {sale.orders.saleProducts.map((e, i) => renderItem(e, i))}
                 </tbody>
               </table>
-              <h3 data-testid={ className(0, 'total') }>{sale.orders.totalPrice.replace(/\./, ',')}</h3>
+              <h3 data-testid={ className(0, 'total') } className="total-checkout">
+                {`Total R$ ${sale.orders.totalPrice.replace(/\./, ',')}`}
+              </h3>
             </div>
           )
       }

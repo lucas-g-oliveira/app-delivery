@@ -1,0 +1,19 @@
+.floating-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
+
+.floating-button button {
+  background-color: #3e64af;
+  color: white;
+  font-size: 24px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.floating-button button div {
+  margin-left: 5px;
+}

@@ -94,8 +94,6 @@ function ShippingDetails() {
           />
         </label>
         <br />
-        {`${sellerSelected},  ${address},  ${numberHouse}`}
-        <br />
         <br />
         <button
           data-testid={ className.finishCheckout }

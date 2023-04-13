@@ -27,10 +27,11 @@ const handleQuantityCart = (id, quantity = 0) => {
   return quantity;
 };
 
-const getTotal = () => {
+const getTotal = (num) => {
   const data = getAll();
   const resultAll = data.filter((e) => e.subtotal);
   const total = resultAll.reduce((acc, curr) => acc + Number(curr.subtotal), 0);
+  if (num === 'num') return total;
   return total.toFixed(2).replace(/\./, ',');
 };
 

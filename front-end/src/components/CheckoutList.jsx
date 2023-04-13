@@ -1,5 +1,6 @@
+import './styles/checkoutTable.css';
 import React, { useState, useEffect } from 'react';
-import { getAll, getTotal, removeItem } from '../util';
+import { getAll, getTotal, handleQuantityCart } from '../util';
 
 function CheckoutList() {
   const [product, setProduct] = useState([]);
@@ -24,7 +25,7 @@ function CheckoutList() {
   }, []);
 
   function deleteItem(id) {
-    removeItem(id);
+    handleQuantityCart(id);
     const storageProducts = getAll();
     setProduct(storageProducts.filter((e) => e.quantity));
   }
@@ -36,8 +37,8 @@ function CheckoutList() {
         <td data-testid={ className(i, 'id') }>{ i + 1 }</td>
         <td data-testid={ className(i, 'name') }>{item.name}</td>
         <td data-testid={ className(i, 'quantity') }>{item.quantity}</td>
-        <td data-testid={ className(i, 'price') }>{item.price.replace(/\./, ',')}</td>
-        <td data-testid={ className(i, 'subtotal') }>{item.subtotal.replace(/\./, ',')}</td>
+        <td data-testid={ className(i, 'price') }>{`R$ ${item.price.replace(/\./, ',')}`}</td>
+        <td data-testid={ className(i, 'subtotal') }>{`R$ ${item.subtotal.replace(/\./, ',')}`}</td>
         <td>
           <button
             data-testid={ className(i, 'btnRemove') }
@@ -67,7 +68,12 @@ function CheckoutList() {
           {product.map((e, i) => renderItem(e, i))}
         </tbody>
       </table>
-      <h3 data-testid={ className(0, 'total') }>{getTotal()}</h3>
+      <h3
+        className="total-checkout"
+        data-testid={ className(0, 'total') }
+      >
+        {`Total: R$ ${getTotal()}`}
+      </h3>
     </div>
   );
 }

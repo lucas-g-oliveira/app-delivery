@@ -1,57 +1,55 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { TableCell, TableHead, Table, TableRow, TableBody } from '@mui/material';
+// import { TableCell, TableHead, Table, TableRow, TableBody } from '@mui/material';
 
 function OrderDetailTable({ saleProducts }) {
   const dataTestPrefix = 'seller_order_details__element-order-table-';
 
   return (
-    <Table aria-label="simple table">
-      <TableHead>
-        <TableRow>
-          <TableCell>Item</TableCell>
-          <TableCell align="right">Descrição</TableCell>
-          <TableCell align="right">Quantidade</TableCell>
-          <TableCell align="right">Valor Unitário</TableCell>
-          <TableCell align="right">Sub-total</TableCell>
-        </TableRow>
-      </TableHead>
-      <TableBody>
+    <table>
+      <tr>
+        <th>Item</th>
+        <th align="right">Descrição</th>
+        <th align="right">Quantidade</th>
+        <th align="right">Valor Unitário</th>
+        <th align="right">Sub-total</th>
+      </tr>
+      <tbody>
         {
           (saleProducts.map((product, index) => (
-            <TableRow key={ index + 1 }>
-              <TableCell data-testid={ `${dataTestPrefix}item-number-${index + 1}` }>
+            <tr key={ index + 1 }>
+              <td data-testid={ `${dataTestPrefix}item-number-${index + 1}` }>
                 {index + 1}
-              </TableCell>
-              <TableCell
+              </td>
+              <td
                 align="right"
                 data-testid={ `${dataTestPrefix}name-${index + 1}` }
               >
                 {product.productDetails.name}
-              </TableCell>
-              <TableCell
+              </td>
+              <td
                 align="right"
                 data-testid={ `${dataTestPrefix}quantity-${index + 1}` }
               >
                 {product.quantity}
-              </TableCell>
-              <TableCell
+              </td>
+              <td
                 align="right"
-                data-testid={ `${dataTestPrefix}unit-price-${index + 1}` }
+                data-testid={ `R$ ${dataTestPrefix}unit-price-${index + 1}` }
               >
                 {`R$${product.productDetails.price.replace(/\./, ',')}`}
-              </TableCell>
-              <TableCell
+              </td>
+              <td
                 align="right"
-                data-testid={ `${dataTestPrefix}sub-total-${index + 1}` }
+                data-testid={ `R$ ${dataTestPrefix}sub-total-${index + 1}` }
               >
                 {`R$${(JSON.parse(product.productDetails.price) * product.quantity).toFixed(2).replace(/\./, ',')}`}
-              </TableCell>
-            </TableRow>
+              </td>
+            </tr>
           )))
         }
-      </TableBody>
-    </Table>
+      </tbody>
+    </table>
   );
 }
 
