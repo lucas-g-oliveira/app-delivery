@@ -67,7 +67,7 @@ function Login(props) {
 
   return (
     <section className="user-login-area">
-      <h1>Login</h1>
+      <h1>App Delivery - Login</h1>
       <label htmlFor="common_login__input-email">
         <input
           className="login__login_input"

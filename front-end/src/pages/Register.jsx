@@ -88,7 +88,7 @@ export default class Register extends React.Component {
     return (
       <div className="register-user">
         <form>
-          <h1>Cadastro</h1>
+          <h1>App Delivery - Cadastro</h1>
           <label htmlFor="input-name">
             Nome
             <input

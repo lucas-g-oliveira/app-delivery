@@ -19,7 +19,10 @@ function SaleCard({ id, status, date, price, address, addressNumber }) {
   }
 
   return (
-    <a href={ `/${role}/orders/${id}` } className="card-order">
+    <a
+      href={ `/${role}/orders/${id}` }
+      className={ `card-order ${status.replace(' ', '')}` }
+    >
       <div>
         <div data-testid={ `${role}_orders__element-order-id-${id}` }>
           <h4>{`Pedido ${id}`}</h4>
