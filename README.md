@@ -2,6 +2,8 @@
 
 #### `Javascript | CSS | React | Hofs | ContexAPI | LocalStorage | Express | Sequelize | MySQL | Docker | Md5 | JWT`
 
+o Projeto é um sistema para gerênciar pedidos de um delivery de cervejas. Possui fluxo para pessoa cliente e seller, atualização de status para a pessoa cliente e validações diversas.
+
 ## Como iniciar:
 `(Você precisa ter o docker instalado)`<br> <br>
 1º Clone o repositório
