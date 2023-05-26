@@ -1,4 +1,4 @@
-# App de Delivery  (Projeto Fullstack em grupo)
+# App de Delivery  (Projeto Fullstack em equipe)
 
 #### `Javascript | CSS | React | Hofs | ContexAPI | LocalStorage | Express | Sequelize | MySQL | Docker | Md5 | JWT`
 
