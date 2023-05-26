@@ -2,13 +2,13 @@
 
 #### `Javascript | CSS | React | Hofs | ContexAPI | LocalStorage | Express | Sequelize | MySQL | Docker | Md5 | JWT`
 
-#### Como iniciar:
+## Como iniciar:
 `(Você precisa ter o docker instalado)`<br> <br>
 1º Clone o repositório
 ```bash
 git clone git@github.com:lucas-g-oliveira/app-delivery.git
 ```
-2º No diretório raiz da aplicação, execute o script abaixo para istalar as dependências, subir o db e iniciar a aplicação:
+2º No diretório raiz da aplicação, execute o script abaixo para instalar as dependências, subir o db e iniciar a aplicação:
 ```bash
 npm run start-app
 ```
