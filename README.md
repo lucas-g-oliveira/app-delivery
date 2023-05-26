@@ -12,6 +12,8 @@ git clone git@github.com:lucas-g-oliveira/app-delivery.git
 ```bash
 npm run start-app
 ```
+#### Como interagir com o app? <br>
+Você pode criar um novo usuário, ou usar o ```zebirita@email.com``` password: ```customer123``` já existente, para criar pedidos; e usar o login de seller: ```fulana@deliveryapp.com``` password: ```seller123``` para alterar o status de um pedido. No próximo tópico descrevo o que é possível fazer.
 
 
 <br>
