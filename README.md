@@ -2,6 +2,12 @@
 
 ### `Javascript | CSS | React | Hofs | ContexAPI | LocalStorage | Express | Sequelize | MySQL | Docker | Md5 | JWT`
 
+#### `Como iniciar:`
+1º Clone o repositório
+```bash
+git clone https://github.com/lucas-g-oliveira/app-delivery
+
+
 <br>
 
 ## Objetivo:
